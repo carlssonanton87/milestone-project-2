@@ -1,44 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vegan Recipe Finder</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header>
-    <h1>Vegan Recipe Finder</h1>
-  </header>
-
-  <main>
-    <!-- New area to add ingredients as tags -->
+<main>
+    <!-- Existing ingredient section for adding multiple ingredients -->
     <section id="ingredient-section">
       <label for="ingredient-input">What's in your kitchen?</label>
       <div id="ingredient-input-wrapper">
-        <!-- Text box for adding a single ingredient -->
         <input 
           type="text" 
           id="ingredient-input" 
-          placeholder="Add ingredient..."
-          aria-label="Add ingredient"
-        />
+          placeholder="Add ingredient..." 
+          aria-label="Add ingredient" />
         <button id="ingredient-add-btn">+</button>
       </div>
-      <!-- Container to display the added ingredients as tags -->
+      <!-- Container to show added ingredients as tags -->
       <div id="ingredient-list"></div>
     </section>
-
-    <!-- Button to initiate the recipe search with all selected ingredients -->
+  
+    <!-- New Filter Options Section -->
+    <section id="filter-section">
+      <h3>Additional Filters:</h3>
+      <label>
+        <input type="checkbox" id="filter-gluten-free" value="gluten" />
+        Gluten-Free
+      </label>
+      <label>
+        <input type="checkbox" id="filter-high-protein" value="high-protein" />
+        High-Protein
+      </label>
+      <label>
+        <input type="checkbox" id="filter-quick-meals" value="quick" />
+        Quick Meals
+      </label>
+    </section>
+  
+    <!-- Button to perform recipe search with the selected ingredients and filters -->
     <button id="search-button">Search Recipes</button>
-
-    <!-- Where the recipe results will be displayed -->
+  
+    <!-- Container where the recipe search results will be displayed -->
     <section id="results"></section>
-
-    <!-- Where the saved favorites will be displayed -->
+  
+    <!-- Favorites section for saved recipes -->
     <section id="favorites"></section>
   </main>
-
-  <script src="script.js"></script>
-</body>
-</html>
+  
