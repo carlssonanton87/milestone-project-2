@@ -1,0 +1,51 @@
+/* styles.css */
+
+/* Styling the overall body of the document */
+body {
+    font-family: Arial, sans-serif;  /* Sets the default font */
+    margin: 0;                       /* Removes default margin */
+    padding: 0;                      /* Removes default padding */
+    background-color: #f9f9f9;         /* Sets a light background color */
+}
+
+/* Header styling for the top section */
+header {
+    background-color: #3cb371;       /* A green color for the header background */
+    color: #fff;                     /* White text color */
+    padding: 1rem;                   /* Adds padding around the content */
+    text-align: center;              /* Centers the header text */
+}
+
+/* Main content container styling */
+main {
+    padding: 1rem;                   /* Adds spacing inside the main content */
+    max-width: 800px;                /* Limits the maximum width for readability */
+    margin: 0 auto;                  /* Centers the main container horizontally */
+}
+
+/* Styling the search section containing input and button */
+#search-section {
+    display: flex;                   /* Uses flexbox for layout */
+    justify-content: center;         /* Centers items horizontally */
+    margin-bottom: 1rem;             /* Adds bottom margin to separate sections */
+}
+
+/* Styles for the search input field */
+#search-input {
+    width: 70%;                      /* Occupies 70% of the search section width */
+    padding: 0.5rem;                 /* Adds space inside the input for text */
+    font-size: 1rem;                 /* Sets font size for clarity */
+}
+
+/* Styles for the search button */
+#search-button {
+    padding: 0.5rem 1rem;            /* Padding: 0.5rem vertically and 1rem horizontally */
+    font-size: 1rem;                 /* Sets the button text size */
+    margin-left: 0.5rem;             /* Spaces the button from the input field */
+    cursor: pointer;                 /* Changes cursor to pointer when hovering */
+}
+
+/* Styling for the results section where recipes will be displayed */
+#results {
+    margin-top: 2rem;                /* Adds space above the results section */
+}
