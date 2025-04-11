@@ -19,4 +19,5 @@ This project is an interactive web application that allows users to input the in
 Instructions to install and run the project will be provided here.
 
 ## Wireframes
-A link to the UI wireframe will be added in a subsequent commit.
+![UI Wireframe](assets/wireframe.png)
+
