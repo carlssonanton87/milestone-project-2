@@ -1,148 +1,156 @@
-// Wait for the DOM to fully load before running the code
+// I ensure that the entire DOM is loaded before executing any code.
 document.addEventListener("DOMContentLoaded", function () {
-    // Retrieve the search input element by its ID
+    // I retrieve the search input element, where users type in their ingredients.
     const searchInput = document.getElementById("search-input");
-    // Retrieve the search button element by its ID
+    // I get the search button element which users click to start searching.
     const searchButton = document.getElementById("search-button");
-    // Retrieve the results container where recipes will be displayed
+    // I retrieve the container element where the recipe search results will be displayed.
     const resultsContainer = document.getElementById("results");
-    // Retrieve the favorites container where favorite recipes will be displayed
+    // I also get the container element where I'll display the user's favorite recipes.
     const favoritesContainer = document.getElementById("favorites");
-    // Initialize an array to store favorite recipes
+    // I initialize an empty array to store recipes that the user marks as favorites.
     let favorites = [];
 
-    // Add an event listener to the search button
+    // I add an event listener to the search button so that when it's clicked, I trigger the recipe search.
     searchButton.addEventListener("click", function () {
-        // Get the user's input, trimmed of extra spaces
+        // I extract the user's input and remove any extra whitespace.
         const query = searchInput.value.trim();
         if (query) {
             console.log("Search button clicked. Query:", query);
-            fetchRecipes(query);  // Call the function to fetch recipes based on the query
+            // I call the fetchRecipes function to fetch recipes based on the input ingredients.
+            fetchRecipes(query);
         } else {
             console.log("Empty query; please enter some ingredients.");
         }
     });
 
     /**
-     * Fetch recipes from the Spoonacular API using the provided ingredients.
+     * I created this function to fetch vegan recipes from Spoonacular using the complexSearch endpoint.
+     * I am passing the user’s input as a comma-separated list of ingredients.
+     * By adding diet=vegan, I ensure that only vegan recipes are returned.
      *
-     * @param {string} query - Comma-separated list of ingredients.
+     * @param {string} query - A comma-separated list of ingredients provided by the user.
      */
     function fetchRecipes(query) {
-        const apiKey = "efcc557c1f6e4663b53db75c89df0f88"; // Spoonacular API key
-        const number = 10; // Number of recipes to return
-        // Build the API URL with query parameters
-        const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(query)}&number=${number}&ranking=1&ignorePantry=true&apiKey=${apiKey}`;
+        const apiKey = "efcc557c1f6e4663b53db75c89df0f88"; // My Spoonacular API key.
+        const number = 10; // I set the maximum number of recipes to return.
+        // I build the API URL, using encodeURIComponent() to properly encode the user's query.
+        const url = `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${encodeURIComponent(query)}&diet=vegan&number=${number}&apiKey=${apiKey}`;
         console.log("Fetching URL:", url);
 
-        // Make the API request
+        // I use fetch() to send a GET request to the Spoonacular API.
         fetch(url)
             .then(response => {
                 console.log("Response status:", response.status);
+                // If the response is not OK, I throw an error to be caught later.
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
+                // I convert the response into JSON format.
                 return response.json();
             })
             .then(data => {
+                // I log the API response for debugging.
                 console.log("API Response:", data);
-                displayRecipes(data);  // Render the recipes on the page
+                // I then pass the recipes (located in data.results) to the displayRecipes function.
+                displayRecipes(data.results);
             })
             .catch(error => {
+                // I log any errors that occur during the fetch process.
                 console.error("Error fetching recipes:", error);
+                // I update the results container with an error message for the user.
                 resultsContainer.innerHTML = "<p>Error fetching recipes. Please try again later.</p>";
             });
     }
 
     /**
-     * Renders the recipes returned by the API on the page.
+     * This function displays the recipes on the page.
+     * It creates a card for each recipe, including the title, image, and a "Save Recipe" button.
      *
-     * @param {Array} recipes - An array of recipe objects.
+     * @param {Array} recipes - An array of recipe objects returned by the API.
      */
     function displayRecipes(recipes) {
-        // Clear any previous results
+        // I clear any previous results to avoid stacking recipes.
         resultsContainer.innerHTML = '';
 
-        // Loop through each recipe from the API response
+        // I loop through the recipes array and create a card for each recipe.
         recipes.forEach(recipe => {
-            // Create a container (card) for the recipe
+            // I create a div element that acts as a card and add a CSS class for styling.
             const card = document.createElement('div');
-            card.classList.add('recipe-card'); // Apply styling
+            card.classList.add('recipe-card');
 
-            // Create an element for the recipe title
+            // I create an h3 element for the recipe title and set its text.
             const title = document.createElement('h3');
             title.textContent = recipe.title;
 
-            // Create an image element for the recipe image
+            // I create an image element for the recipe, setting its source to the recipe image.
             const image = document.createElement('img');
             image.src = recipe.image;
             image.alt = `${recipe.title} image`;
             image.style.width = "100%";
 
-            // Create a paragraph element to display ingredient details
-            const details = document.createElement('p');
-            details.textContent = `Used Ingredients: ${recipe.usedIngredientCount}, Missing Ingredients: ${recipe.missedIngredientCount}`;
-
-            // Create a "Save Recipe" button to allow users to favorite a recipe
+            // I create a "Save Recipe" button that lets the user add recipes to their favorites.
             const saveButton = document.createElement('button');
             saveButton.textContent = "Save Recipe";
             saveButton.addEventListener("click", function () {
-                // Ensure the recipe isn't already saved (check by id)
+                // I check if the recipe is already saved based on its unique id.
                 if (!favorites.some(fav => fav.id === recipe.id)) {
                     favorites.push(recipe);
-                    updateFavorites(); // Refresh the favorites display
+                    // I update the favorites section to reflect the newly saved recipe.
+                    updateFavorites();
                 }
             });
 
-            // Append title, image, details, and save button to the recipe card
+            // I append the title, image, and save button to the card.
             card.appendChild(title);
             card.appendChild(image);
-            card.appendChild(details);
             card.appendChild(saveButton);
 
-            // Append the recipe card to the results container
+            // I append the complete card to the results container on the page.
             resultsContainer.appendChild(card);
         });
     }
 
     /**
-     * Updates and renders the favorite recipes in the favorites section.
+     * This function updates the favorites section on the page.
+     * It loops through the favorites array and creates a card for each saved recipe.
      */
     function updateFavorites() {
-        // Clear the favorites container, keeping the header
+        // I clear the favorites container and re-add the header.
         favoritesContainer.innerHTML = "<h2>Favorites</h2>";
 
-        // Loop through each saved favorite recipe
+        // I loop through each recipe in my favorites array.
         favorites.forEach(fav => {
-            // Create a card for each favorite recipe
+            // I create a card for each favorite recipe.
             const card = document.createElement('div');
-            card.classList.add('recipe-card'); // Reuse card styling
+            card.classList.add('recipe-card');
 
-            // Create an element for the recipe title
+            // I create an h3 element for the recipe title.
             const title = document.createElement('h3');
             title.textContent = fav.title;
 
-            // Create an image element for the recipe
+            // I create an image element for the recipe.
             const image = document.createElement('img');
             image.src = fav.image;
             image.alt = `${fav.title} image`;
             image.style.width = "100%";
 
-            // Create a "Remove" button to allow removal from favorites
+            // I create a "Remove" button to allow users to remove the recipe from favorites.
             const removeButton = document.createElement('button');
             removeButton.textContent = "Remove";
             removeButton.addEventListener("click", function () {
-                // Remove this recipe from the favorites array
+                // I remove the recipe from the favorites array using a filter.
                 favorites = favorites.filter(r => r.id !== fav.id);
-                updateFavorites(); // Refresh the display
+                // I update the favorites section to reflect the removal.
+                updateFavorites();
             });
 
-            // Append title, image, and remove button to the favorite card
+            // I append the title, image, and remove button to the favorite card.
             card.appendChild(title);
             card.appendChild(image);
             card.appendChild(removeButton);
 
-            // Append the favorite card to the favorites container
+            // I append the favorite card to the favorites container.
             favoritesContainer.appendChild(card);
         });
     }
