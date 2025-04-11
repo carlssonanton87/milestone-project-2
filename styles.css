@@ -1,87 +1,168 @@
-/* styles.css */
+/* I’m setting up a modern, clean, and responsive design */
 
-/* Styling the overall body of the document */
+/* I choose a modern sans-serif font and a light background for the whole app */
 body {
-    font-family: Arial, sans-serif;  /* Sets the default font */
-    margin: 0;                       /* Removes default margin */
-    padding: 0;                      /* Removes default padding */
-    background-color: #f9f9f9;         /* Sets a light background color */
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;  /* I use 'Roboto' for a clean look; you can link it from Google Fonts */
+    background-color: #f5f5f5;
 }
 
-/* Header styling for the top section */
+/* I style the header with a solid color, increased padding, and a subtle shadow for a modern appearance */
 header {
-    background-color: #3cb371;       /* A green color for the header background */
-    color: #fff;                     /* White text color */
-    padding: 1rem;                   /* Adds padding around the content */
-    text-align: center;              /* Centers the header text */
+    background-color: #3cb371;
+    color: #fff;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Main content container styling */
+/* I limit the main content width for readability and center it on the page */
 main {
-    padding: 1rem;                   /* Adds spacing inside the main content */
-    max-width: 800px;                /* Limits the maximum width for readability */
-    margin: 0 auto;                  /* Centers the main container horizontally */
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
-/* Styling the search section containing input and button */
-#search-section {
-    display: flex;                   /* Uses flexbox for layout */
-    justify-content: center;         /* Centers items horizontally */
-    margin-bottom: 1rem;             /* Adds bottom margin to separate sections */
-}
-
-/* Styles for the search input field */
-#search-input {
-    width: 70%;                      /* Occupies 70% of the search section width */
-    padding: 0.5rem;                 /* Adds space inside the input for text */
-    font-size: 1rem;                 /* Sets font size for clarity */
-}
-
-/* Styles for the search button */
-#search-button {
-    padding: 0.5rem 1rem;            /* Padding: 0.5rem vertically and 1rem horizontally */
-    font-size: 1rem;                 /* Sets the button text size */
-    margin-left: 0.5rem;             /* Spaces the button from the input field */
-    cursor: pointer;                 /* Changes cursor to pointer when hovering */
-}
-
-/* Styling for the results section where recipes will be displayed */
-#results {
-    margin-top: 2rem;                /* Adds space above the results section */
-}
-
-/* Ingredient input section styling */
-#ingredient-section {
+/* I give the ingredient section (and later the filter section) a card-like appearance */
+#ingredient-section, #filter-section {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
-  }
-  
-  /* Input and button wrapped side-by-side */
-  #ingredient-input-wrapper {
+}
+
+/* I use flexbox to arrange the input and add-button side by side */
+#ingredient-input-wrapper {
     display: flex;
     gap: 0.5rem;
     margin-top: 0.5rem;
-  }
-  
-  /* Tag container that shows added ingredients */
-  #ingredient-list {
-    margin-top: 1rem;
+}
+
+/* I make the ingredient input flexible and visually appealing */
+#ingredient-input {
+    flex-grow: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* I style the add button with a matching color and hover effect */
+#ingredient-add-btn {
+    padding: 0.8rem;
+    background-color: #3cb371;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+#ingredient-add-btn:hover {
+    background-color: #2e8b57;
+}
+
+/* I display the ingredient tags in a flex container that wraps as needed */
+#ingredient-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-  }
-  
-  /* Individual ingredient tag style */
-  .ingredient-tag {
-    background-color: #eee;
-    border-radius: 4px;
-    padding: 0.4rem 0.6rem;
-    cursor: pointer;
+    margin-top: 0.5rem;
+}
+/* I style each ingredient tag as a pill with an "X" to indicate removal */
+.ingredient-tag {
+    background-color: #e0e0e0;
+    padding: 0.5rem 0.8rem;
+    border-radius: 16px;
     font-size: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  .ingredient-tag:hover {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.ingredient-tag:hover {
     background-color: #ccc;
-  }
-  
+}
+
+/* I style the filter section to align its checkboxes and labels nicely */
+#filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+#filter-section label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 1rem;
+}
+
+/* I style the search button to be prominent and centered */
+#search-button {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 1rem auto;
+    padding: 0.8rem;
+    background-color: #3cb371;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+#search-button:hover {
+    background-color: #2e8b57;
+}
+
+/* I style the recipe cards to have a subtle border, rounded corners, and a slight hover effect for interactivity */
+.recipe-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+.recipe-card:hover {
+    transform: scale(1.02);
+}
+/* I reset the top margin for headings in cards */
+.recipe-card h3 {
+    margin-top: 0;
+}
+/* I ensure images inside cards are responsive and slightly rounded */
+.recipe-card img {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+/* I add media queries to adjust the layout for small screens */
+@media (max-width: 600px) {
+    header {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+    main {
+        padding: 0.5rem;
+    }
+    #ingredient-section, #filter-section {
+        padding: 0.8rem;
+    }
+    #ingredient-input, #ingredient-add-btn {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+    .ingredient-tag {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
+    #search-button {
+        font-size: 1rem;
+        padding: 0.6rem;
+    }
+}
