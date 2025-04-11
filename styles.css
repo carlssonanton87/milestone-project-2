@@ -49,3 +49,39 @@ main {
 #results {
     margin-top: 2rem;                /* Adds space above the results section */
 }
+
+/* Ingredient input section styling */
+#ingredient-section {
+    margin-bottom: 1rem;
+  }
+  
+  /* Input and button wrapped side-by-side */
+  #ingredient-input-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* Tag container that shows added ingredients */
+  #ingredient-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  /* Individual ingredient tag style */
+  .ingredient-tag {
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .ingredient-tag:hover {
+    background-color: #ccc;
+  }
+  

@@ -1,50 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Set character encoding -->
-    <meta charset="UTF-8">
-    <!-- Ensure responsive design on mobile devices -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Title of the web page shown in the browser tab -->
-    <title>Vegan Recipe Finder</title>
-    <!-- Link to the external CSS file for styling -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vegan Recipe Finder</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <!-- Header section for the site title -->
-    <header>
-        <!-- Main heading for the web app -->
-        <h1>Vegan Recipe Finder</h1>
-    </header>
-    
-    <!-- Main content area of the page -->
-    <main>
-        <!-- Section for the search input and button -->
-        <section id="search-section">
-            <!-- Input field for users to enter ingredients -->
-            <input type="text" id="search-input" placeholder="Enter ingredients...">
-            <!-- Button to trigger the search function -->
-            <button id="search-button">Search Recipes</button>
-        </section>
-        
-        <!-- Section where search results (recipes) will be displayed -->
-        <section id="results">
-            <!-- Recipe results will be injected here dynamically via JavaScript -->
-        </section>
+  <header>
+    <h1>Vegan Recipe Finder</h1>
+  </header>
 
-        <!-- Section where search results (recipes) will be displayed -->
-<section id="results">
-    <!-- Recipe results will be injected here dynamically via JavaScript -->
-</section>
+  <main>
+    <!-- New area to add ingredients as tags -->
+    <section id="ingredient-section">
+      <label for="ingredient-input">What's in your kitchen?</label>
+      <div id="ingredient-input-wrapper">
+        <!-- Text box for adding a single ingredient -->
+        <input 
+          type="text" 
+          id="ingredient-input" 
+          placeholder="Add ingredient..."
+          aria-label="Add ingredient"
+        />
+        <button id="ingredient-add-btn">+</button>
+      </div>
+      <!-- Container to display the added ingredients as tags -->
+      <div id="ingredient-list"></div>
+    </section>
 
-<!-- Favorites section to display saved recipes -->
-<section id="favorites">
-    <!-- The heading and favorite recipes will be injected here by JavaScript -->
-</section>
+    <!-- Button to initiate the recipe search with all selected ingredients -->
+    <button id="search-button">Search Recipes</button>
 
-    </main>
+    <!-- Where the recipe results will be displayed -->
+    <section id="results"></section>
 
-    <!-- Link to the JavaScript file for interactivity -->
-    <script src="script.js"></script>
+    <!-- Where the saved favorites will be displayed -->
+    <section id="favorites"></section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
