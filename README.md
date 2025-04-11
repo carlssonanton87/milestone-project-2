@@ -21,3 +21,10 @@ Instructions to install and run the project will be provided here.
 ## Wireframes
 ![UI Wireframe](assets/wireframe.png)
 
+## Bug Log
+
+### Bug: API Fetch Failing Initially
+- **Description:** When attempting to fetch recipes from the Spoonacular API, nothing was displayed because the API call was failing. The issue was due to the script not being wrapped in a `DOMContentLoaded` event listener and the results container not being defined properly.
+- **Impact:** Users could not see any recipes when performing a search, which impeded progress testing the API integration.
+- **Resolution:** The bug was fixed in commit `feat: Integrate Spoonacular API with real data using provided API key and update display logic`, where the JavaScript code was updated to wrap all functionality within a `DOMContentLoaded` event listener and properly define and reference the results container.
+- **Status:** Fixed
