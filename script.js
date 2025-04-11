@@ -1,21 +1,23 @@
 // Wait for the DOM to fully load before running the code
 document.addEventListener("DOMContentLoaded", function () {
-    // Retrieve the search input element by its ID from the HTML
+    // Retrieve the search input element by its ID
     const searchInput = document.getElementById("search-input");
-    // Retrieve the search button element by its ID from the HTML
+    // Retrieve the search button element by its ID
     const searchButton = document.getElementById("search-button");
-    // Retrieve the results container where the recipe cards will be displayed
+    // Retrieve the results container where recipes will be displayed
     const resultsContainer = document.getElementById("results");
+    // Retrieve the favorites container where favorite recipes will be displayed
+    const favoritesContainer = document.getElementById("favorites");
+    // Initialize an array to store favorite recipes
+    let favorites = [];
 
     // Add an event listener to the search button
     searchButton.addEventListener("click", function () {
         // Get the user's input, trimmed of extra spaces
         const query = searchInput.value.trim();
         if (query) {
-            // Log the search click and query value for debugging
             console.log("Search button clicked. Query:", query);
-            // Call the function to fetch recipes based on the query
-            fetchRecipes(query);
+            fetchRecipes(query);  // Call the function to fetch recipes based on the query
         } else {
             console.log("Empty query; please enter some ingredients.");
         }
@@ -23,77 +25,125 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /**
      * Fetch recipes from the Spoonacular API using the provided ingredients.
+     *
      * @param {string} query - Comma-separated list of ingredients.
      */
     function fetchRecipes(query) {
-        // Your Spoonacular API key provided by the user
-        const apiKey = "efcc557c1f6e4663b53db75c89df0f88";
-        // Define the number of recipes you want to return
-        const number = 10;
-        // Build the API URL with query parameters safely encoded
+        const apiKey = "efcc557c1f6e4663b53db75c89df0f88"; // Spoonacular API key
+        const number = 10; // Number of recipes to return
+        // Build the API URL with query parameters
         const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(query)}&number=${number}&ranking=1&ignorePantry=true&apiKey=${apiKey}`;
-        // Log the URL for debugging
         console.log("Fetching URL:", url);
 
-        // Make the API request using fetch()
+        // Make the API request
         fetch(url)
             .then(response => {
-                // Check if the response status is ok (HTTP status code 200-299)
+                console.log("Response status:", response.status);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                // Parse the response JSON
                 return response.json();
             })
             .then(data => {
-                // Log the API response data for debugging
                 console.log("API Response:", data);
-                // Call displayRecipes to update the UI with the fetched recipes
-                displayRecipes(data);
+                displayRecipes(data);  // Render the recipes on the page
             })
             .catch(error => {
-                // Log any errors that occur during the fetch call
                 console.error("Error fetching recipes:", error);
-                // Show a user-friendly error message in the results container
                 resultsContainer.innerHTML = "<p>Error fetching recipes. Please try again later.</p>";
             });
     }
 
     /**
      * Renders the recipes returned by the API on the page.
+     *
      * @param {Array} recipes - An array of recipe objects.
      */
     function displayRecipes(recipes) {
         // Clear any previous results
         resultsContainer.innerHTML = '';
 
-        // Loop through each recipe in the received data
+        // Loop through each recipe from the API response
         recipes.forEach(recipe => {
-            // Create a new div element that will act as a "card" for the recipe
+            // Create a container (card) for the recipe
             const card = document.createElement('div');
-            card.classList.add('recipe-card'); // Add class for styling
+            card.classList.add('recipe-card'); // Apply styling
 
             // Create an element for the recipe title
             const title = document.createElement('h3');
             title.textContent = recipe.title;
 
-            // Create an image element for the recipe
+            // Create an image element for the recipe image
             const image = document.createElement('img');
-            image.src = recipe.image;           // Recipe image URL from the API
+            image.src = recipe.image;
             image.alt = `${recipe.title} image`;
-            image.style.width = "100%";           // Set image width
+            image.style.width = "100%";
 
-            // Create an element to show some details (used and missed ingredients)
+            // Create a paragraph element to display ingredient details
             const details = document.createElement('p');
             details.textContent = `Used Ingredients: ${recipe.usedIngredientCount}, Missing Ingredients: ${recipe.missedIngredientCount}`;
 
-            // Append title, image, and details to the recipe card
+            // Create a "Save Recipe" button to allow users to favorite a recipe
+            const saveButton = document.createElement('button');
+            saveButton.textContent = "Save Recipe";
+            saveButton.addEventListener("click", function () {
+                // Ensure the recipe isn't already saved (check by id)
+                if (!favorites.some(fav => fav.id === recipe.id)) {
+                    favorites.push(recipe);
+                    updateFavorites(); // Refresh the favorites display
+                }
+            });
+
+            // Append title, image, details, and save button to the recipe card
             card.appendChild(title);
             card.appendChild(image);
             card.appendChild(details);
+            card.appendChild(saveButton);
 
-            // Append the recipe card to the results container in your HTML
+            // Append the recipe card to the results container
             resultsContainer.appendChild(card);
+        });
+    }
+
+    /**
+     * Updates and renders the favorite recipes in the favorites section.
+     */
+    function updateFavorites() {
+        // Clear the favorites container, keeping the header
+        favoritesContainer.innerHTML = "<h2>Favorites</h2>";
+
+        // Loop through each saved favorite recipe
+        favorites.forEach(fav => {
+            // Create a card for each favorite recipe
+            const card = document.createElement('div');
+            card.classList.add('recipe-card'); // Reuse card styling
+
+            // Create an element for the recipe title
+            const title = document.createElement('h3');
+            title.textContent = fav.title;
+
+            // Create an image element for the recipe
+            const image = document.createElement('img');
+            image.src = fav.image;
+            image.alt = `${fav.title} image`;
+            image.style.width = "100%";
+
+            // Create a "Remove" button to allow removal from favorites
+            const removeButton = document.createElement('button');
+            removeButton.textContent = "Remove";
+            removeButton.addEventListener("click", function () {
+                // Remove this recipe from the favorites array
+                favorites = favorites.filter(r => r.id !== fav.id);
+                updateFavorites(); // Refresh the display
+            });
+
+            // Append title, image, and remove button to the favorite card
+            card.appendChild(title);
+            card.appendChild(image);
+            card.appendChild(removeButton);
+
+            // Append the favorite card to the favorites container
+            favoritesContainer.appendChild(card);
         });
     }
 });
