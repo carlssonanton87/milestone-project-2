@@ -47,11 +47,18 @@
     <!-- Button to perform recipe search with the selected ingredients and filters -->
     <button id="search-button">Search Recipes</button>
   
-    <!-- Container where the recipe search results will be displayed -->
-    <section id="results"></section>
+   <!-- 
+    Grid container for recipe cards: 
+    This #results section will now become a grid to show all recipe cards.
+  -->
+  <section id="results" class="recipe-grid"></section>
   
     <!-- Favorites section for saved recipes -->
-    <section id="favorites"></section>
+    <section id="favorites">
+        <h2>Favorites</h2>
+        <!-- We'll inject favorite cards into this container via JS -->
+        <div id="favorites-grid"></div>
+      </section>
   </main>
 
   <script src="script.js"></script>
