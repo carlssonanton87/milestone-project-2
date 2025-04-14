@@ -1,56 +1,48 @@
-/* I’m setting up a modern, clean, and responsive design */
-
-/* I choose a modern sans-serif font and a light background for the whole app */
+/* Global Styles */
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;  /* I use 'Roboto' for a clean look; you can link it from Google Fonts */
+    font-family: 'Roboto', sans-serif;
     background-color: #f5f5f5;
-}
-
-/* I style the header with a solid color, increased padding, and a subtle shadow for a modern appearance */
-header {
+  }
+  
+  header {
     background-color: #3cb371;
     color: #fff;
     padding: 1.5rem;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* I limit the main content width for readability and center it on the page */
-main {
+  }
+  
+  main {
     max-width: 1000px;
     margin: 0 auto;
     padding: 1rem;
-}
-
-/* I give the ingredient section (and later the filter section) a card-like appearance */
-#ingredient-section, #filter-section {
+  }
+  
+  /* Ingredient and Filter Sections */
+  #ingredient-section, #filter-section {
     background-color: #fff;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
-}
-
-/* I use flexbox to arrange the input and add-button side by side */
-#ingredient-input-wrapper {
+  }
+  
+  /* Ingredient Input Group */
+  #ingredient-input-wrapper {
     display: flex;
     gap: 0.5rem;
     margin-top: 0.5rem;
-}
-
-/* I make the ingredient input flexible and visually appealing */
-#ingredient-input {
+  }
+  #ingredient-input {
     flex-grow: 1;
     padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
-}
-
-/* I style the add button with a matching color and hover effect */
-#ingredient-add-btn {
+  }
+  #ingredient-add-btn {
     padding: 0.8rem;
     background-color: #3cb371;
     color: #fff;
@@ -59,47 +51,46 @@ main {
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
-}
-#ingredient-add-btn:hover {
+  }
+  #ingredient-add-btn:hover {
     background-color: #2e8b57;
-}
-
-/* I display the ingredient tags in a flex container that wraps as needed */
-#ingredient-list {
+  }
+  
+  /* Ingredient Tags */
+  #ingredient-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.5rem;
-}
-/* I style each ingredient tag as a pill with an "X" to indicate removal */
-.ingredient-tag {
+  }
+  .ingredient-tag {
     background-color: #e0e0e0;
     padding: 0.5rem 0.8rem;
     border-radius: 16px;
     font-size: 0.9rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-.ingredient-tag:hover {
+  }
+  .ingredient-tag:hover {
     background-color: #ccc;
-}
-
-/* I style the filter section to align its checkboxes and labels nicely */
-#filter-section {
+  }
+  
+  /* Filter Section */
+  #filter-section {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
-}
-#filter-section label {
+  }
+  #filter-section label {
     display: flex;
     align-items: center;
     gap: 0.3rem;
     font-size: 1rem;
-}
-
-/* I style the search button to be prominent and centered */
-#search-button {
+  }
+  
+  /* Search Button */
+  #search-button {
     display: block;
     width: 100%;
     max-width: 300px;
@@ -112,109 +103,59 @@ main {
     cursor: pointer;
     font-size: 1.1rem;
     transition: background-color 0.3s ease;
-}
-#search-button:hover {
+  }
+  #search-button:hover {
     background-color: #2e8b57;
-}
-
-/* I ensure the body and main container have a modern look and are responsive */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f5f5f5;
-}
-
-main {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 1rem;
-}
-
-/* 
-  Grid layout: 
-  I use display: grid to arrange the cards in columns that 
-  automatically resize and wrap for responsiveness.
-*/
-.recipe-grid {
+  }
+  
+  /* Grid Layout for Recipe Cards (Used by Results and Favorites) */
+  .recipe-grid,
+  #favorites-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
     margin-top: 1rem;
-}
-
-/* 
-  Card style:
-  - White background
-  - Rounded corners
-  - Box shadow for a "lifted" look
-  - Column layout (image on top, text and button below)
-*/
-.recipe-card {
+  }
+  
+  /* Recipe Card Styles */
+  .recipe-card {
     display: flex;
     flex-direction: column;
     background-color: #fff;
     border-radius: 8px;
-    overflow: hidden; /* ensures no overflow if image or text exceed card bounds */
+    overflow: hidden;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
-}
-
-/* 
-  Slight "hover" effect for interactivity 
-*/
-.recipe-card:hover {
+    /* Ensuring cards don't force full width via flex properties */
+  }
+  .recipe-card:hover {
     transform: translateY(-2px);
-}
-
-/* 
-  I style the image to take up the full width of the card 
-*/
-.recipe-card img {
+  }
+  .recipe-card img {
     width: 100%;
-    height: 150px; 
-    object-fit: cover;  /* ensures the image is cropped instead of distorted */
-}
-
-/* 
-  I add padding around the content inside the card 
-*/
-.recipe-card-content {
-    flex: 1; /* push the button area to bottom if you want consistent card heights */
+    height: 150px;
+    object-fit: cover;
+  }
+  .recipe-card-content {
+    flex: 1;
     padding: 1rem;
-}
-
-/* 
-  Headings for recipe titles 
-*/
-.recipe-card-content h3 {
-    margin: 0 0 0.5rem 0;
+  }
+  .recipe-card-content h3 {
+    margin: 0 0 0.5rem;
     font-size: 1.1rem;
     font-weight: 600;
-}
-
-/* 
-  A short snippet or recipe description 
-*/
-.recipe-card-content p {
-    margin: 0 0 1rem 0;
+  }
+  .recipe-card-content p {
+    margin: 0 0 1rem;
     font-size: 0.95rem;
     color: #555;
-}
-
-/* 
-  The button area at the bottom of the card 
-*/
-.recipe-card-footer {
+  }
+  .recipe-card-footer {
     display: flex;
     justify-content: center;
-    padding: 0 1rem 1rem 1rem;
-}
-
-/* 
-  "Visa Recept" button or "Save Recipe" button 
-*/
-.recipe-card-footer button {
+    padding: 0 1rem 1rem;
+  }
+  .recipe-card-footer button {
     background-color: #3cb371;
     color: #fff;
     border: none;
@@ -223,78 +164,65 @@ main {
     font-size: 0.9rem;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-.recipe-card-footer button:hover {
+  }
+  .recipe-card-footer button:hover {
     background-color: #2e8b57;
-}
-
-/* 
-  Favorites section heading 
-*/
-#favorites h2 {
-    margin-top: 0;
-}
-
-/* I style the favorite star button to be larger and remove extra default button styles */
-.favorite-btn {
+  }
+  
+  /* Favorite Star Button */
+  .favorite-btn {
     background: none;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
     margin-right: 0.5rem;
-    color: #f0ad4e;  /* I choose a gold-orange color for the star */
+    color: #f0ad4e;
     transition: transform 0.2s ease;
-}
-
-.favorite-btn:hover {
+  }
+  .favorite-btn:hover {
     transform: scale(1.2);
-}
-
-/* I define a grid layout for the favorites container's inner grid */
-.favorites-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
-}
-
-
-/* I add media queries to adjust the layout for small screens */
-@media (max-width: 600px) {
+  }
+  
+  /* Favorites Section Heading */
+  #favorites h2 {
+    margin-top: 0;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
     header {
-        padding: 1rem;
-        font-size: 1.2rem;
+      padding: 1rem;
+      font-size: 1.2rem;
     }
     main {
-        padding: 0.5rem;
+      padding: 0.5rem;
     }
     #ingredient-section, #filter-section {
-        padding: 0.8rem;
+      padding: 0.8rem;
     }
     #ingredient-input, #ingredient-add-btn {
-        font-size: 0.9rem;
-        padding: 0.6rem;
+      font-size: 0.9rem;
+      padding: 0.6rem;
     }
     .ingredient-tag {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.6rem;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
     }
     #search-button {
-        font-size: 1rem;
-        padding: 0.6rem;
+      font-size: 1rem;
+      padding: 0.6rem;
     }
-
     .recipe-card img {
-        height: 120px;
+      height: 120px;
     }
     .recipe-card-content h3 {
-        font-size: 1rem;
+      font-size: 1rem;
     }
     .recipe-card-content p {
-        font-size: 0.85rem;
+      font-size: 0.85rem;
     }
     .recipe-card-footer button {
-        font-size: 0.8rem;
+      font-size: 0.8rem;
     }
-}
+  }
+  

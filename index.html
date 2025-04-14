@@ -12,7 +12,7 @@
   </header>
 
   <main>
-    <!-- Existing ingredient section for adding multiple ingredients -->
+    <!-- Ingredient Section -->
     <section id="ingredient-section">
       <label for="ingredient-input">What's in your kitchen?</label>
       <div id="ingredient-input-wrapper">
@@ -23,11 +23,10 @@
           aria-label="Add ingredient" />
         <button id="ingredient-add-btn">+</button>
       </div>
-      <!-- Container to show added ingredients as tags -->
       <div id="ingredient-list"></div>
     </section>
   
-    <!-- New Filter Options Section -->
+    <!-- Filter Options Section -->
     <section id="filter-section">
       <h3>Additional Filters:</h3>
       <label>
@@ -44,28 +43,19 @@
       </label>
     </section>
   
-    <!-- Button to perform recipe search with the selected ingredients and filters -->
+    <!-- Search Button -->
     <button id="search-button">Search Recipes</button>
   
-   <!-- 
-    Grid container for recipe cards: 
-    This #results section will now become a grid to show all recipe cards.
-  -->
-  <section id="results" class="recipe-grid"></section>
+    <!-- Results Grid for Recipe Cards -->
+    <section id="results" class="recipe-grid"></section>
   
-    <!-- Favorites section for saved recipes -->
+    <!-- Favorites Section -->
     <section id="favorites">
-        <h2>Favorites</h2>
-        <!-- We'll inject favorite cards into this container via JS -->
-        <div id="favorites-grid"></div>
-      </section>
+      <h2>Favorites</h2>
+      <div id="favorites-grid"></div>
+    </section>
   </main>
 
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-  
