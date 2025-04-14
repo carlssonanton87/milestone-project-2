@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const favoritesContainer = document.getElementById("favorites");
     let favorites = []; // I store favorite recipes here.
 
+    const modal = document.getElementById("recipe-modal");
+    const modalBody = document.getElementById("modal-body");
+    const modalClose = document.getElementById("modal-close");
+
     // I add an ingredient when the user clicks the plus (+) button.
     ingredientAddBtn.addEventListener("click", function () {
         const newIngredient = ingredientInput.value.trim();
@@ -25,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ingredientInput.value = ""; // I clear the input.
             renderIngredientTags();
         }
+
     });
 
     // I render each ingredient as a clickable tag so the user can remove it.
@@ -188,8 +193,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const viewButton = document.createElement("button");
             viewButton.textContent = "Visa recept";
             viewButton.addEventListener("click", function () {
-                console.log("Visa recept clicked for:", recipe.title);
+                openRecipeModal(recipe);
             });
+            
             cardFooter.appendChild(viewButton);
             card.appendChild(cardFooter);
 
@@ -207,6 +213,91 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         });
     }
+
+/**
+ * I fetch detailed recipe information from Spoonacular using the information endpoint.
+ *
+ * @param {number} recipeId - The recipe's unique ID.
+ * @returns {Promise<Object>} A promise that resolves with the detailed information.
+ */
+function fetchRecipeDetails(recipeId) {
+    const apiKey = "efcc557c1f6e4663b53db75c89df0f88";
+    const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
+    console.log("Fetching detailed recipe URL:", url);
+    return fetch(url)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`Error fetching details for recipe ${recipeId}: ${response.status}`);
+          }
+          return response.json();
+      });
+}
+
+/**
+ * I update the modal to show full recipe details including a larger image,
+ * a comprehensive description, a list of ingredients, and step-by-step instructions.
+ *
+ * @param {Object} recipe - The recipe object for which details are needed.
+ */
+function openRecipeModal(recipe) {
+    // Set initial modal content
+    modalBody.innerHTML = `<h2>${recipe.title}</h2><p>Loading recipe details...</p>`;
+    modal.style.display = "block";
+    
+    // Fetch detailed recipe info from the information endpoint.
+    fetchRecipeDetails(recipe.id)
+      .then(details => {
+          // Construct the content for the modal.
+          // I check if the recipe has a detailed summary; if not, I use instructions.
+          // Note: details.summary might include HTML, so I could use stripHtml if needed.
+          const summaryText = details.summary ? stripHtml(details.summary) : "No summary available.";
+          
+          // Get the list of ingredients.
+          const ingredientsList = details.extendedIngredients
+              ? details.extendedIngredients.map(ing => ing.original).join("<br>")
+              : "Ingredients not available.";
+          
+          // Get instructions; they might be in 'instructions', if available.
+          let instructionsText = "";
+          if (details.instructions) {
+              instructionsText = stripHtml(details.instructions);
+          } else if (details.analyzedInstructions && details.analyzedInstructions.length > 0) {
+              // If analyzedInstructions is available, we can loop through steps.
+              instructionsText = details.analyzedInstructions[0].steps
+                  .map(step => step.step)
+                  .join("<br><br>");
+          } else {
+              instructionsText = "No instructions available.";
+          }
+          
+          // Construct HTML content for the modal.
+          modalBody.innerHTML = `
+            <h2>${details.title}</h2>
+            <img src="${details.image}" alt="${details.title} image" style="width:100%;max-height:300px;object-fit:cover;border-radius:8px;">
+            <h3>Description</h3>
+            <p>${summaryText}</p>
+            <h3>Ingredients</h3>
+            <p>${ingredientsList}</p>
+            <h3>Instructions</h3>
+            <p>${instructionsText}</p>
+          `;
+      })
+      .catch(error => {
+          console.error("Error fetching full recipe details:", error);
+          modalBody.innerHTML = `<h2>${recipe.title}</h2><p>Details not available.</p>`;
+      });
+}
+
+// Event listeners for closing the modal remain unchanged.
+modalClose.addEventListener("click", function () {
+    modal.style.display = "none";
+});
+window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
 
     /**
      * I update the favorites section so that saved recipes are displayed in a grid.
