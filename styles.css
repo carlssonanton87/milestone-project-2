@@ -1,269 +1,264 @@
 /* Global Styles */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
+
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f5f5f5;
-  }
-  
-  header {
-    background-color: #3cb371;
+    font-family: 'Montserrat', sans-serif;  /* Switched from Roboto to Montserrat */
+    background-color: #e8e8e8;  /* Slightly off-white background for a modern feel */
+}
+
+header {
+    /* I set a linear gradient for a modern, dynamic header look */
+    background: linear-gradient(to right, #2c7a7b, #3cb371);
     color: #fff;
-    padding: 1.5rem;
+    padding: 2rem 1rem;  /* Increased padding for prominence */
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  main {
-    max-width: 1000px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    max-width: 1200px;  /* Increased max-width for larger screens */
     margin: 0 auto;
     padding: 1rem;
-  }
-  
-  /* Ingredient and Filter Sections */
-  #ingredient-section, #filter-section {
+}
+
+/* Ingredient and Filter Sections */
+#ingredient-section, #filter-section {
     background-color: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 1rem;
-  }
-  
-  /* Ingredient Input Group */
-  #ingredient-input-wrapper {
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+/* Ingredient Input Group */
+#ingredient-input-wrapper {
     display: flex;
     gap: 0.5rem;
     margin-top: 0.5rem;
-  }
-  #ingredient-input {
+}
+#ingredient-input {
     flex-grow: 1;
     padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid #ccc;  /* Changed border color slightly */
+    border-radius: 5px;
     font-size: 1rem;
-  }
-  #ingredient-add-btn {
+}
+#ingredient-add-btn {
     padding: 0.8rem;
     background-color: #3cb371;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  #ingredient-add-btn:hover {
+    transition: background 0.3s ease;
+}
+#ingredient-add-btn:hover {
     background-color: #2e8b57;
-  }
-  
-  /* Ingredient Tags */
-  #ingredient-list {
+}
+
+/* Ingredient Tags */
+#ingredient-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.5rem;
-  }
-  .ingredient-tag {
-    background-color: #e0e0e0;
+}
+.ingredient-tag {
+    background-color: #f0f0f0;
     padding: 0.5rem 0.8rem;
-    border-radius: 16px;
+    border-radius: 20px;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .ingredient-tag:hover {
-    background-color: #ccc;
-  }
-  
-  /* Filter Section */
-  #filter-section {
+    transition: background 0.3s ease;
+}
+.ingredient-tag:hover {
+    background-color: #ddd;
+}
+
+/* Filter Section */
+#filter-section {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
-  }
-  #filter-section label {
+}
+#filter-section label {
     display: flex;
     align-items: center;
     gap: 0.3rem;
     font-size: 1rem;
-  }
-  
-  /* Search Button */
-  #search-button {
+}
+
+/* Search Button */
+#search-button {
     display: block;
     width: 100%;
     max-width: 300px;
-    margin: 1rem auto;
+    margin: 1.5rem auto;
     padding: 0.8rem;
     background-color: #3cb371;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 1.1rem;
-    transition: background-color 0.3s ease;
-  }
-  #search-button:hover {
+    transition: background 0.3s ease;
+}
+#search-button:hover {
     background-color: #2e8b57;
-  }
-  
-  /* Grid Layout for Recipe Cards (Used by Results and Favorites) */
-  .recipe-grid,
-  #favorites-grid {
+}
+
+/* Grid Layout for Recipe Cards (Results & Favorites) */
+.recipe-grid,
+#favorites-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Increased min width to 240px */
     gap: 1.5rem;
-    margin-top: 1rem;
-  }
-  
-  /* Recipe Card Styles */
-  .recipe-card {
-    display: flex;
-    flex-direction: column;
+    margin-top: 1.5rem;
+}
+
+/* Recipe Card Styles */
+.recipe-card {
+    display: block;  /* Let the grid determine width, not flex */
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
-    /* Ensuring cards don't force full width via flex properties */
-  }
-  .recipe-card:hover {
-    transform: translateY(-2px);
-  }
-  .recipe-card img {
+}
+.recipe-card:hover {
+    transform: translateY(-3px);
+}
+.recipe-card img {
     width: 100%;
-    height: 150px;
+    height: 160px;
     object-fit: cover;
-  }
-  .recipe-card-content {
-    flex: 1;
+}
+.recipe-card-content {
     padding: 1rem;
-  }
-  .recipe-card-content h3 {
+}
+.recipe-card-content h3 {
     margin: 0 0 0.5rem;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 600;
-  }
-  .recipe-card-content p {
-    margin: 0 0 1rem;
+}
+.recipe-card-content p {
+    margin: 0;
     font-size: 0.95rem;
-    color: #555;
-  }
-  .recipe-card-footer {
+    color: #666;
+}
+.recipe-card-footer {
     display: flex;
-    justify-content: center;
-    padding: 0 1rem 1rem;
-  }
-  .recipe-card-footer button {
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem 1rem;
+}
+.recipe-card-footer button {
     background-color: #3cb371;
     color: #fff;
     border: none;
     border-radius: 4px;
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  .recipe-card-footer button:hover {
+    transition: background 0.3s;
+}
+.recipe-card-footer button:hover {
     background-color: #2e8b57;
-  }
-  
-  /* Favorite Star Button */
-  .favorite-btn {
+}
+
+/* Favorite Star Button */
+.favorite-btn {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     cursor: pointer;
     margin-right: 0.5rem;
     color: #f0ad4e;
     transition: transform 0.2s ease;
-  }
-  .favorite-btn:hover {
-    transform: scale(1.2);
-  }
-  
-  /* Favorites Section Heading */
-  #favorites h2 {
-    margin-top: 0;
-  }
+}
+.favorite-btn:hover {
+    transform: scale(1.3);
+}
 
-  /* Modal container (hidden by default) */
+/* Favorites Section Heading */
+#favorites h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+/* Modal Styles */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; 
-    z-index: 1000; /* On top of other content */
+    display: none;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-  }
-  
-  /* Modal content box */
-  .modal-content {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
     background-color: #fefefe;
-    margin: 10% auto; /* 10% from the top and centered */
+    margin: 10% auto;
     padding: 2rem;
     border: 1px solid #888;
-    width: 80%; /* Adjust width as needed */
+    width: 80%;
     max-width: 600px;
     border-radius: 8px;
     position: relative;
-  }
-  
-  /* Close button (top right) */
-  .modal-close {
+}
+.modal-close {
     color: #aaa;
     float: right;
     font-size: 1.8rem;
     font-weight: bold;
     cursor: pointer;
-  }
-  
-  .modal-close:hover,
-  .modal-close:focus {
+}
+.modal-close:hover,
+.modal-close:focus {
     color: #000;
     text-decoration: none;
-  }
-  
-  
-  /* Responsive Design */
-  @media (max-width: 600px) {
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
     header {
-      padding: 1rem;
-      font-size: 1.2rem;
+        padding: 1rem;
+        font-size: 1.2rem;
     }
     main {
-      padding: 0.5rem;
+        padding: 0.5rem;
     }
     #ingredient-section, #filter-section {
-      padding: 0.8rem;
+        padding: 0.8rem;
     }
     #ingredient-input, #ingredient-add-btn {
-      font-size: 0.9rem;
-      padding: 0.6rem;
+        font-size: 0.9rem;
+        padding: 0.6rem;
     }
     .ingredient-tag {
-      font-size: 0.8rem;
-      padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
     }
     #search-button {
-      font-size: 1rem;
-      padding: 0.6rem;
+        font-size: 1rem;
+        padding: 0.6rem;
     }
     .recipe-card img {
-      height: 120px;
+        height: 140px;
     }
     .recipe-card-content h3 {
-      font-size: 1rem;
+        font-size: 1rem;
     }
     .recipe-card-content p {
-      font-size: 0.85rem;
+        font-size: 0.85rem;
     }
     .recipe-card-footer button {
-      font-size: 0.8rem;
+        font-size: 0.8rem;
     }
-  }
-  
+}
