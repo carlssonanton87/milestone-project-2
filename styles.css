@@ -17,6 +17,37 @@ header {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Header content layout */
+header .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* Main navigation */
+  .main-nav {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+  }
+  
+  .main-nav a:hover,
+  .main-nav a:focus {
+    opacity: 0.8;
+  }
+  
+
 main {
     max-width: 1200px;  /* Increased max-width for larger screens */
     margin: 0 auto;
@@ -118,17 +149,24 @@ main {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Increased min width to 240px */
     gap: 1.5rem;
     margin-top: 1.5rem;
+
+      /* make each row equally tall */
+  grid-auto-rows: 1fr;
+  align-items: stretch;  /* ensure items stretch to fill the row height */
 }
 
 /* Recipe Card Styles */
 .recipe-card {
-    display: block;  /* Let the grid determine width, not flex */
+    display: flex;            /* re-enable flexbox */
+    flex-direction: column;   /* stack content & footer vertically */
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
+    height: 100%;             /* fill the grid row height */
 }
+
 .recipe-card:hover {
     transform: translateY(-3px);
 }
@@ -139,6 +177,7 @@ main {
 }
 .recipe-card-content {
     padding: 1rem;
+    flex: 1;    
 }
 .recipe-card-content h3 {
     margin: 0 0 0.5rem;
@@ -150,12 +189,15 @@ main {
     font-size: 0.95rem;
     color: #666;
 }
+/* Center and space out the star + button on each card */
 .recipe-card-footer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 1rem 1rem;
-}
+    justify-content: center; /* Center items horizontally */
+    align-items: center;     /* Center items vertically */
+    gap: 1rem;               /* Space between star and button */
+    padding: 1rem;           /* Give top/bottom padding for balance */
+  }
+
 .recipe-card-footer button {
     background-color: #3cb371;
     color: #fff;
@@ -198,6 +240,7 @@ main {
     border: none;
     font-size: 1.7rem;
     cursor: pointer;
+    margin: 0;
     margin-right: 0.5rem;
     color: #f0ad4e;
     transition: transform 0.2s ease;
@@ -208,7 +251,7 @@ main {
 
 /* Favorites Section Heading */
 #favorites h2 {
-    margin-top: 0;
+    margin-top: 3rem;
     font-size: 1.5rem;
 }
 
