@@ -5,9 +5,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Spinner element to indicate loading state
     const loadingSpinner = document.getElementById('loading-spinner');
 
+    // Get the forms
+const ingredientForm = document.getElementById('ingredient-form');
+const searchForm     = document.getElementById('search-form');
+
     // Ingredient input elements and storage
     const ingredientInput = document.getElementById("ingredient-input");
-    const ingredientAddBtn = document.getElementById("ingredient-add-btn");
+   
     const ingredientListContainer = document.getElementById("ingredient-list");
     let ingredients = []; // Array to hold user-selected ingredients
 
@@ -17,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const filterQuickMeals = document.getElementById("filter-quick-meals");
 
     // Search button and result/favorites containers
-    const searchButton = document.getElementById("search-button");
+    
     const resultsContainer = document.getElementById("results");
-    const favoritesContainer = document.getElementById("favorites");
+    
 
     // Load favorites from localStorage or start with an empty array
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -30,15 +34,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalBody = document.getElementById("modal-body");
     const modalClose = document.getElementById("modal-close");
 
-    // Add new ingredient on '+' click
-    ingredientAddBtn.addEventListener("click", function () {
-        const newIngredient = ingredientInput.value.trim();
-        if (newIngredient && !ingredients.includes(newIngredient)) {
-            ingredients.push(newIngredient);
-            ingredientInput.value = ""; // Clear input field
-            renderIngredientTags();
-        }
-    });
+    
+// Handle ingredient submission (Enter key or '+' click)
+ingredientForm.addEventListener('submit', function(event) {
+    event.preventDefault();            // Don’t reload the page
+    const newIngredient = ingredientInput.value.trim();
+    if (newIngredient && !ingredients.includes(newIngredient)) {
+      ingredients.push(newIngredient);
+      ingredientInput.value = '';
+      renderIngredientTags();
+    }
+  });
 
     /**
      * Render the list of ingredient tags.
@@ -59,15 +65,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Trigger recipe search on button click
-    searchButton.addEventListener("click", function () {
-        if (ingredients.length === 0) {
-            console.log("No ingredients selected. Please add at least one ingredient.");
-            return;
-        }
-        const query = ingredients.join(",");
-        fetchRecipes(query);
-    });
+    // Handle recipe search submission (Enter key in filter or button click)
+searchForm.addEventListener('submit', function(event) {
+    event.preventDefault();             // Prevent page refresh
+    if (ingredients.length === 0) {
+      console.log('No ingredients selected. Please add at least one ingredient.');
+      return;
+    }
+    const query = ingredients.join(',');
+    fetchRecipes(query);
+  });
 
     /**
      * Fetch vegan recipes with optional filters using Spoonacular API.
@@ -259,6 +266,18 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     function updateFavorites() {
         const favoritesGrid = document.getElementById("favorites-grid");
+        const favoritesContainer = document.getElementById("favorites");
+        // If there are no favorites, hide the entire section:
+        if (favorites.length === 0) {
+             favoritesContainer.style.display = "none";
+            return;
+                 } else {
+                    favoritesContainer.style.display = "";
+                                        }
+
+  favoritesGrid.innerHTML = "";
+  // …render each favorite card…
+}
         if (!favoritesGrid) return;
         favoritesGrid.innerHTML = "";
 
