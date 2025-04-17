@@ -1,98 +1,77 @@
-# Milestone Project 2 - Vegan Recipe Finder
+# Milestone Project 2 – Vegan Recipe Finder
 
 ## Overview
-Vegan Recipe Finder is an interactive front-end web application designed to help users discover vegan recipes based on the ingredients they have available. The project integrates with the Spoonacular API to fetch vegan recipes according to the following user inputs:
+**Vegan Recipe Finder** is an interactive front‑end web application that helps users discover vegan recipes based on the ingredients they have at home. It integrates with the Spoonacular API to:
 
-- **Ingredient Input:** Users add ingredients as tags.
-- **Filter Options:** Additional filters (Gluten-Free, High-Protein, Quick Meals) refine recipe searches.
-- **Recipe Cards:** Recipes are displayed in a modern card layout with a shortened summary for readability.
-- **Favorites:** Users can save recipes using a star icon toggle and view them in a responsive grid.
-- **Full Recipe Modal:** Clicking "Visa recept" opens a modal with a detailed view including an enlarged image, full description, and step-by-step instructions.
+- Let users add multiple ingredients as tags  
+- Apply optional filters (Gluten‑Free, High‑Protein, Quick Meals)  
+- Display results in a modern, responsive card grid with shortened summaries  
+- Save favorites via a star‑toggle and view them in a separate grid  
+- Open a “Visa recept” modal showing a full‑size image, detailed description, and step‑by‑step instructions  
 
-## Features
-- **Multiple Ingredient Input:**  
-  Users can add ingredients which are displayed as removable tags.
-- **Dynamic Filters:**  
-  Options to include Gluten-Free, High-Protein, and Quick Meals filters.
-- **API Integration:**  
-  Uses Spoonacular’s `complexSearch` endpoint with `diet=vegan` for tailored vegan recipes.
-- **Detailed Recipe Display:**  
-  Recipe cards show an image, title, and a summary that shortens lengthy descriptions.
-- **Favorite Functionality:**  
-  Favoriting a recipe is done via a star icon (empty star for un-favorited, filled star for favorited), and favorites are displayed in a responsive grid.
-- **Modal for Full Details:**  
-  The "Visa recept" button opens a modal that fetches and displays full recipe details including a full image, detailed description, and cooking instructions.
+---
 
-## Technologies Used
-- **HTML5, CSS3, and JavaScript** for the client-side interface.
-- **Spoonacular API** to fetch recipe data.
-- **CSS Grid & Flexbox** for responsive layout.
-- **Git & GitHub** for version control and repository hosting.
+## User Experience
+1. **Add Ingredients**  
+   - Type an ingredient and click **+** to create a removable tag.
+2. **Apply Filters**  
+   - Tick any of **Gluten‑Free**, **High‑Protein**, or **Quick Meals** to narrow results.
+3. **Search Recipes**  
+   - Click **Search Recipes** to fetch custom vegan recipes.
+4. **Browse Cards**  
+   - Scroll a responsive grid of recipe cards showing image, title, and a short snippet.
+5. **View Details**  
+   - Click **View Recipes** on any card to open a modal with full recipe info.
+6. **Save Favorites**  
+   - Click the star icon (☆/★) to toggle favorites, which appear in their own grid.
 
+### Wireframes
+![Wireframe 1](assets/wireframe1.png)  
+*Initial layout with ingredient input, filters, and buttons.*  
 
-## Technologies Used
-- **HTML5, CSS3, and JavaScript** – For front-end development.
-- **Spoonacular API** – To fetch vegan recipe data.
-- **CSS Grid and Flexbox** – For responsive layouts.
-- **Git & GitHub** – For version control and hosting.
+![Wireframe 2](assets/wireframe2.png)  
+*Recipe card grid and modal design.*  
 
-## Usage
-- **Adding Ingredients:**  
-  Enter an ingredient in the input field and click the plus (+) button. Each ingredient appears as a removable tag.
-- **Filtering:**  
-  Optionally select any additional filters before searching.
-- **Searching for Recipes:**  
-  Click the **Search Recipes** button to fetch vegan recipes based on your selected ingredients and filters.
-- **Viewing Recipe Details:**  
-  Click "Visa recept" on a recipe card to open a modal showing detailed recipe information.
-- **Saving Favorites:**  
-  Click the star icon on a card to toggle it as a favorite. Favorites appear in a dedicated grid section.
+---
 
 ## Development Process
-1. **Initial Setup:**  
-   Set up basic HTML, CSS, and JavaScript files.
-2. **Ingredient Tag & Filter System:**  
-   Developed dynamic ingredient input tags and filtering options.
-3. **API Integration:**  
-   Integrated the Spoonacular API (with `diet=vegan` and additional filters) to fetch recipes.
-4. **Recipe Card Layout:**  
-   Designed a responsive grid layout for recipe cards that include images, titles, and shortened summaries.
-5. **Favorite Functionality:**  
-   Enabled favoriting through a star icon, with saved recipes shown in a grid.
-6. **Full Recipe Modal:**  
-   Implemented a modal that retrieves and displays detailed recipe information, including an enlarged image, full description, and cooking instructions.
-7. **Summary Shortening:**  
-   Added helper functions to strip HTML and shorten lengthy summaries for readability.
+1. **Initial Setup**  
+   Created base HTML, CSS, and JavaScript scaffolding; set up GitHub repo.  
+2. **Ingredient Tag & Filter System**  
+   Built dynamic ingredient‑tag component and filter checkboxes.  
+3. **API Integration**  
+   Integrated Spoonacular’s `complexSearch` endpoint with `diet=vegan` and added filter parameters.  
+4. **Recipe Card Layout**  
+   Designed a responsive CSS Grid of recipe cards, each with an image, title, and truncated summary.  
+5. **Favorites Functionality**  
+   Added a star toggle to save favorites, displayed in a separate responsive grid.  
+6. **Full Recipe Modal**  
+   Implemented a modal that fetches and shows full recipe details (image, summary, instructions).  
+7. **Summary Shortening**  
+   Added helper functions to strip HTML and shorten long summaries for improved readability.  
 
-## Known Issues / Future Enhancements
-- **API Rate Limits:**  
-  Spoonacular's free tier has request limits. Consider caching responses or upgrading your plan if necessary.
-- **Error Handling:**  
-  Further improvements can be made in error management and fallback UI.
-- **Enhanced Data:**  
-  Future updates could include nutritional information, user reviews, and additional recipe details.
-- **UI/UX Improvements:**  
-  Additional refinements for accessibility and mobile responsiveness are planned.
+---
 
-## Setup
-Instructions to install and run the project will be provided here.
+## Technologies Used
+- **HTML5, CSS3, JavaScript** – Core front‑end stack  
+- **Spoonacular API** – Recipe data (endpoints: `complexSearch`, `information`)  
+- **CSS Grid & Flexbox** – Layout and responsive design  
+- **Git & GitHub** – Version control and hosting  
+- **Live Server (VS Code Extension)** – Local development preview  
+- **W3C Validators** – HTML/CSS validation  
+- **Chrome DevTools** – Debugging and responsiveness testing  
 
-## Wireframes
-![UI Wireframe](assets/wireframe1.png)
-![UI Wireframe](assets/wireframe2.png)
+---
 
-## Bug Log
-
+## Bug Fixes
 ### Bug: API Fetch Failing Initially
-- **Description:** When attempting to fetch recipes from the Spoonacular API, nothing was displayed because the API call was failing. The issue was due to the script not being wrapped in a `DOMContentLoaded` event listener and the results container not being defined properly.
-- **Impact:** Users could not see any recipes when performing a search, which impeded progress testing the API integration.
-- **Resolution:** The bug was fixed in commit `feat: Integrate Spoonacular API with real data using provided API key and update display logic`, where the JavaScript code was updated to wrap all functionality within a `DOMContentLoaded` event listener and properly define and reference the results container.
-- **Status:** Fixed
+- **Description:**  
+  First fetch attempt failed because our script ran before the DOM was ready and the results container wasn’t defined.  
+- **Impact:**  
+  No recipes displayed on search, blocking API integration testing.  
+- **Resolution:**  
+  Wrapped all DOM queries and event listeners inside a `DOMContentLoaded` handler and ensured `resultsContainer` is correctly selected.  
+- **Status:**  
+  Fixed in commit `feat: Integrate Spoonacular API with real data and wrap code in DOMContentLoaded`.
 
-### Tools
-- **Git & GitHub** for version control.
-- **Gitpod** as the development environment.    
-- **Visual Studio Code** as the development environment.  
-- **Live Server Extension** for live preview.  
-- **W3C Validators** for HTML/CSS validation.  
-- **Chrome DevTools** for responsiveness testing.
+---

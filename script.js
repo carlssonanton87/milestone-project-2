@@ -190,11 +190,12 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             cardFooter.appendChild(favoriteButton);
 
-            const viewButton = document.createElement("button");
-            viewButton.textContent = "Visa recept";
-            viewButton.addEventListener("click", function () {
-                openRecipeModal(recipe);
-            });
+            const viewButton = document.createElement('button');
+viewButton.textContent = "View recipe";
+viewButton.addEventListener("click", function () {
+    openRecipeModal(recipe);
+});
+
             
             cardFooter.appendChild(viewButton);
             card.appendChild(cardFooter);
