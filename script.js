@@ -1,135 +1,120 @@
-// I wait for the DOM to fully load before executing any code.
+// Wait for the DOM to fully load before running any code
+// This ensures all elements are available for selection and event binding
+
 document.addEventListener("DOMContentLoaded", function () {
+    // Spinner element to indicate loading state
     const loadingSpinner = document.getElementById('loading-spinner');
 
-    // I select elements for adding ingredients.
+    // Ingredient input elements and storage
     const ingredientInput = document.getElementById("ingredient-input");
     const ingredientAddBtn = document.getElementById("ingredient-add-btn");
     const ingredientListContainer = document.getElementById("ingredient-list");
-    let ingredients = []; // I store the ingredients here.
+    let ingredients = []; // Array to hold user-selected ingredients
 
-    // I select the filter checkboxes.
+    // Filter checkboxes for dietary options
     const filterGlutenFree = document.getElementById("filter-gluten-free");
     const filterHighProtein = document.getElementById("filter-high-protein");
     const filterQuickMeals = document.getElementById("filter-quick-meals");
 
-    // I select elements for search results and favorites.
+    // Search button and result/favorites containers
     const searchButton = document.getElementById("search-button");
     const resultsContainer = document.getElementById("results");
     const favoritesContainer = document.getElementById("favorites");
 
-    // Load favorites from localStorage (if any), otherwise start with an empty array
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-updateFavorites();
+    // Load favorites from localStorage or start with an empty array
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    updateFavorites();
 
-
+    // Modal elements for detailed recipe view
     const modal = document.getElementById("recipe-modal");
     const modalBody = document.getElementById("modal-body");
     const modalClose = document.getElementById("modal-close");
 
-    // I add an ingredient when the user clicks the plus (+) button.
+    // Add new ingredient on '+' click
     ingredientAddBtn.addEventListener("click", function () {
         const newIngredient = ingredientInput.value.trim();
         if (newIngredient && !ingredients.includes(newIngredient)) {
             ingredients.push(newIngredient);
-            ingredientInput.value = ""; // I clear the input.
+            ingredientInput.value = ""; // Clear input field
             renderIngredientTags();
         }
-
     });
 
-    // I render each ingredient as a clickable tag so the user can remove it.
+    /**
+     * Render the list of ingredient tags.
+     * Clicking a tag removes it from the list.
+     */
     function renderIngredientTags() {
-        ingredientListContainer.innerHTML = ""; // Clear previous tags.
+        ingredientListContainer.innerHTML = ""; // Clear existing tags
         ingredients.forEach((ing, index) => {
             const tag = document.createElement("span");
             tag.className = "ingredient-tag";
-            tag.textContent = `${ing} ✕`; // Display with a removal indicator.
-            tag.addEventListener("click", function () {
-                ingredients.splice(index, 1); // Remove the ingredient.
-                renderIngredientTags();
+            tag.textContent = `${ing} ✕`;
+            tag.setAttribute('aria-label', `Remove ingredient ${ing}`); // Screen reader label
+            tag.addEventListener("click", () => {
+                ingredients.splice(index, 1); // Remove from array
+                renderIngredientTags();        // Re-render tags
             });
             ingredientListContainer.appendChild(tag);
         });
     }
 
-    // When the user clicks "Search Recipes," I join the ingredients and fetch recipes.
+    // Trigger recipe search on button click
     searchButton.addEventListener("click", function () {
         if (ingredients.length === 0) {
             console.log("No ingredients selected. Please add at least one ingredient.");
             return;
         }
         const query = ingredients.join(",");
-        console.log("Searching with ingredients:", query);
         fetchRecipes(query);
     });
 
     /**
-     * I fetch vegan recipes from Spoonacular using the complexSearch endpoint.
-     * I also include additional filters if selected.
-     *
-     * @param {string} query - A comma-separated list of ingredients.
+     * Fetch vegan recipes with optional filters using Spoonacular API.
+     * @param {string} query - Comma-separated list of ingredients
      */
     function fetchRecipes(query) {
-        // Show spinner
-  loadingSpinner.classList.remove('hidden');
-        const apiKey = "efcc557c1f6e4663b53db75c89df0f88"; // My Spoonacular API key.
-        const number = 10; // I want to return 10 recipes.
+        loadingSpinner.classList.remove('hidden'); // Show spinner
+
+        const apiKey = "efcc557c1f6e4663b53db75c89df0f88";
         let url = `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${encodeURIComponent(query)}&diet=vegan`;
-        
-        if (filterGlutenFree.checked) {
-            url += "&intolerances=gluten";
-        }
-        if (filterHighProtein.checked) {
-            url += "&minProtein=10";
-        }
-        if (filterQuickMeals.checked) {
-            url += "&maxReadyTime=30";
-        }
-        url += `&number=${number}&apiKey=${apiKey}`;
-        console.log("Fetching URL:", url);
+        if (filterGlutenFree.checked) url += "&intolerances=gluten";
+        if (filterHighProtein.checked) url += "&minProtein=10";
+        if (filterQuickMeals.checked) url += "&maxReadyTime=30";
+        url += `&number=10&apiKey=${apiKey}`;
 
         fetch(url)
-        .then(response => {
-            // Hide spinner once we have a response
-            loadingSpinner.classList.add('hidden');
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            return response.json();
-          })
-            .then(data => {
-                console.log("API Response:", data);
-                displayRecipes(data.results);
+            .then(response => {
+                loadingSpinner.classList.add('hidden'); // Hide spinner on response
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return response.json();
             })
+            .then(data => displayRecipes(data.results))
             .catch(error => {
-                // Hide spinner even on error
                 loadingSpinner.classList.add('hidden');
                 console.error("Error fetching recipes:", error);
                 resultsContainer.innerHTML = "<p>Error fetching recipes. Please try again later.</p>";
-              });
+            });
     }
 
     /**
-     * I fetch a detailed summary for a recipe using its ID.
-     *
-     * @param {number} recipeId - The ID of the recipe.
-     * @returns {Promise<Object>} A promise that resolves with the summary data.
+     * Fetch the recipe summary (HTML) for a given recipe ID.
+     * @param {number} recipeId
+     * @returns {Promise<Object>}
      */
     function fetchRecipeSummary(recipeId) {
-        const summaryUrl = `https://api.spoonacular.com/recipes/${recipeId}/summary?apiKey=efcc557c1f6e4663b53db75c89df0f88`;
-        return fetch(summaryUrl)
+        const url = `https://api.spoonacular.com/recipes/${recipeId}/summary?apiKey=${apiKey}`;
+        return fetch(url)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error fetching summary for recipe ${recipeId}: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`Error ${response.status}`);
                 return response.json();
             });
     }
 
     /**
-     * I strip HTML from a string to produce plain text.
-     *
-     * @param {string} html - The HTML string.
-     * @returns {string} The plain text.
+     * Remove HTML tags from a string, returning plain text.
+     * @param {string} html
+     * @returns {string}
      */
     function stripHtml(html) {
         const tmp = document.createElement("DIV");
@@ -138,217 +123,176 @@ updateFavorites();
     }
 
     /**
-     * I shorten the given text to a maximum length.
-     *
-     * @param {string} text - The text to shorten.
-     * @param {number} maxLength - The maximum allowed length.
-     * @returns {string} The shortened text.
+     * Truncate text to a specified max length, adding ellipsis.
+     * @param {string} text
+     * @param {number} maxLength
+     * @returns {string}
      */
     function shortenText(text, maxLength) {
-        if (text.length > maxLength) {
-            return text.slice(0, maxLength) + "...";
-        }
-        return text;
+        return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
     }
 
     /**
-     * I display fetched recipes as cards in my results grid.
-     * I fetch and then shorten each recipe summary for readability.
-     *
-     * @param {Array} recipes - The array of recipe objects.
+     * Display recipe cards in the results container.
+     * Fetches and injects each summary snippet asynchronously.
+     * @param {Array} recipes
      */
     function displayRecipes(recipes) {
-        resultsContainer.innerHTML = ""; // I clear any previous results.
-
+        resultsContainer.innerHTML = ""; // Clear previous results
         recipes.forEach(recipe => {
             const card = document.createElement("div");
             card.className = "recipe-card";
 
+            // Recipe image
             const image = document.createElement("img");
             image.src = recipe.image || "";
             image.alt = `${recipe.title} image`;
             card.appendChild(image);
 
-            const cardContent = document.createElement("div");
-            cardContent.className = "recipe-card-content";
-
+            // Card content (title + snippet)
+            const content = document.createElement("div");
+            content.className = "recipe-card-content";
             const title = document.createElement("h3");
             title.textContent = recipe.title;
-            cardContent.appendChild(title);
-
+            content.appendChild(title);
             const snippet = document.createElement("p");
             snippet.textContent = "Loading summary...";
-            cardContent.appendChild(snippet);
+            content.appendChild(snippet);
+            card.appendChild(content);
 
-            card.appendChild(cardContent);
+            // Card footer with favorite and view buttons
+            const footer = document.createElement("div");
+            footer.className = "recipe-card-footer";
 
-            const cardFooter = document.createElement("div");
-            cardFooter.className = "recipe-card-footer";
-
-            const favoriteButton = document.createElement("button");
-            favoriteButton.className = "favorite-btn";
-            favoriteButton.innerHTML = favorites.some(fav => fav.id === recipe.id) ? "★" : "☆";
-            favoriteButton.addEventListener("click", function () {
-                if (favorites.some(fav => fav.id === recipe.id)) {
-                    favorites = favorites.filter(fav => fav.id !== recipe.id);
-                    favoriteButton.innerHTML = "☆";
-                } else {
-                    favorites.push(recipe);
-                    favoriteButton.innerHTML = "★";
-                }
+            // Favorite button
+            const favBtn = document.createElement("button");
+            favBtn.className = "favorite-btn";
+            const isFav = favorites.some(fav => fav.id === recipe.id);
+            favBtn.innerHTML = isFav ? "★" : "☆";
+            favBtn.setAttribute('aria-label', isFav
+                ? `Remove ${recipe.title} from favorites`
+                : `Add ${recipe.title} to favorites`
+            );
+            favBtn.addEventListener("click", () => {
+                if (isFav) favorites = favorites.filter(fav => fav.id !== recipe.id);
+                else favorites.push(recipe);
+                favBtn.innerHTML = isFav ? "☆" : "★";
                 updateFavorites();
             });
-            cardFooter.appendChild(favoriteButton);
+            footer.appendChild(favBtn);
 
-            const viewButton = document.createElement('button');
-viewButton.textContent = "View recipe";
-viewButton.addEventListener("click", function () {
-    openRecipeModal(recipe);
-});
+            // View details button
+            const viewBtn = document.createElement("button");
+            viewBtn.textContent = "View recipe";
+            viewBtn.setAttribute('aria-label', `View details for ${recipe.title}`);
+            viewBtn.addEventListener("click", () => openRecipeModal(recipe));
+            footer.appendChild(viewBtn);
 
-            
-            cardFooter.appendChild(viewButton);
-            card.appendChild(cardFooter);
-
+            card.appendChild(footer);
             resultsContainer.appendChild(card);
 
-            // I fetch the summary for the recipe and update the snippet.
+            // Fetch and display summary text
             fetchRecipeSummary(recipe.id)
-                .then(summaryData => {
-                    const plainText = stripHtml(summaryData.summary);
-                    snippet.textContent = shortenText(plainText, 150);
+                .then(data => {
+                    const text = stripHtml(data.summary);
+                    snippet.textContent = shortenText(text, 150);
                 })
-                .catch(error => {
-                    console.error("Error fetching summary:", error);
+                .catch(() => {
                     snippet.textContent = "Summary not available.";
                 });
         });
     }
 
-/**
- * I fetch detailed recipe information from Spoonacular using the information endpoint.
- *
- * @param {number} recipeId - The recipe's unique ID.
- * @returns {Promise<Object>} A promise that resolves with the detailed information.
- */
-function fetchRecipeDetails(recipeId) {
-    const apiKey = "efcc557c1f6e4663b53db75c89df0f88";
-    const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
-    console.log("Fetching detailed recipe URL:", url);
-    return fetch(url)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`Error fetching details for recipe ${recipeId}: ${response.status}`);
-          }
-          return response.json();
-      });
-}
-
-/**
- * I update the modal to show full recipe details including a larger image,
- * a comprehensive description, a list of ingredients, and step-by-step instructions.
- *
- * @param {Object} recipe - The recipe object for which details are needed.
- */
-function openRecipeModal(recipe) {
-    // Set initial modal content
-    modalBody.innerHTML = `<h2>${recipe.title}</h2><p>Loading recipe details...</p>`;
-    modal.style.display = "block";
-    
-    // Fetch detailed recipe info from the information endpoint.
-    fetchRecipeDetails(recipe.id)
-      .then(details => {
-          // Construct the content for the modal.
-          // I check if the recipe has a detailed summary; if not, I use instructions.
-          // Note: details.summary might include HTML, so I could use stripHtml if needed.
-          const summaryText = details.summary ? stripHtml(details.summary) : "No summary available.";
-          
-          // Get the list of ingredients.
-          const ingredientsList = details.extendedIngredients
-              ? details.extendedIngredients.map(ing => ing.original).join("<br>")
-              : "Ingredients not available.";
-          
-          // Get instructions; they might be in 'instructions', if available.
-          let instructionsText = "";
-          if (details.instructions) {
-              instructionsText = stripHtml(details.instructions);
-          } else if (details.analyzedInstructions && details.analyzedInstructions.length > 0) {
-              // If analyzedInstructions is available, we can loop through steps.
-              instructionsText = details.analyzedInstructions[0].steps
-                  .map(step => step.step)
-                  .join("<br><br>");
-          } else {
-              instructionsText = "No instructions available.";
-          }
-          
-          // Construct HTML content for the modal.
-          modalBody.innerHTML = `
-            <h2>${details.title}</h2>
-            <img src="${details.image}" alt="${details.title} image" style="width:100%;max-height:300px;object-fit:cover;border-radius:8px;">
-            <h3>Description</h3>
-            <p>${summaryText}</p>
-            <h3>Ingredients</h3>
-            <p>${ingredientsList}</p>
-            <h3>Instructions</h3>
-            <p>${instructionsText}</p>
-          `;
-      })
-      .catch(error => {
-          console.error("Error fetching full recipe details:", error);
-          modalBody.innerHTML = `<h2>${recipe.title}</h2><p>Details not available.</p>`;
-      });
-}
-
-// Event listeners for closing the modal remain unchanged.
-modalClose.addEventListener("click", function () {
-    modal.style.display = "none";
-});
-window.addEventListener("click", function (event) {
-    if (event.target === modal) {
-        modal.style.display = "none";
+    /**
+     * Fetch detailed recipe information (ingredients + instructions).
+     * @param {number} recipeId
+     * @returns {Promise<Object>}
+     */
+    function fetchRecipeDetails(recipeId) {
+        const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
+        return fetch(url).then(resp => {
+            if (!resp.ok) throw new Error(`Error ${resp.status}`);
+            return resp.json();
+        });
     }
-});
-
 
     /**
-     * I update the favorites section so that saved recipes are displayed in a grid.
+     * Open the modal and populate with full recipe details.
+     * @param {Object} recipe
+     */
+    function openRecipeModal(recipe) {
+        modalBody.innerHTML = `<h2>${recipe.title}</h2><p>Loading...</p>`;
+        modal.style.display = "block";
+        fetchRecipeDetails(recipe.id)
+            .then(details => {
+                const desc = stripHtml(details.summary || "");
+                const ingList = details.extendedIngredients.map(i => i.original).join("<br>");
+                let instr = "";
+                if (details.instructions) instr = stripHtml(details.instructions);
+                else if (details.analyzedInstructions.length)
+                    instr = details.analyzedInstructions[0].steps.map(s => s.step).join("<br><br>");
+
+                modalBody.innerHTML = `
+                    <h2>${details.title}</h2>
+                    <img src="${details.image}" alt="${details.title} image" style="width:100%;height:auto;object-fit:cover;border-radius:8px;">
+                    <h3>Description</h3><p>${desc}</p>
+                    <h3>Ingredients</h3><p>${ingList}</p>
+                    <h3>Instructions</h3><p>${instr}</p>
+                `;
+            })
+            .catch(() => {
+                modalBody.innerHTML = `<h2>${recipe.title}</h2><p>Details not available.</p>`;
+            });
+    }
+
+    // Close modal on '×' click or if clicking outside modal content
+    modalClose.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
+
+    /**
+     * Update and render the favorites grid.
+     * Steps:
+     * 1. Retrieve the favorites grid container.
+     * 2. Clear existing content.
+     * 3. Create and append cards for each favorite.
+     * 4. Persist the updated favorites array.
      */
     function updateFavorites() {
         const favoritesGrid = document.getElementById("favorites-grid");
-        if (!favoritesGrid) {
-            console.error("Favorites grid container not found.");
-            return;
-        }
-        favoritesGrid.innerHTML = ""; // I clear previous favorites.
+        if (!favoritesGrid) return;
+        favoritesGrid.innerHTML = "";
 
         favorites.forEach(fav => {
+            // Card wrapper
             const card = document.createElement("div");
             card.className = "recipe-card";
 
+            // Image
             const image = document.createElement("img");
             image.src = fav.image || "";
             image.alt = `${fav.title} image`;
             card.appendChild(image);
 
-            const cardContent = document.createElement("div");
-            cardContent.className = "recipe-card-content";
-
+            // Title
+            const content = document.createElement("div");
+            content.className = "recipe-card-content";
             const title = document.createElement("h3");
             title.textContent = fav.title;
-            cardContent.appendChild(title);
-            card.appendChild(cardContent);
+            content.appendChild(title);
+            card.appendChild(content);
 
-            const cardFooter = document.createElement("div");
-            cardFooter.className = "recipe-card-footer";
-
-            const removeButton = document.createElement("button");
-            removeButton.textContent = "Remove";
-            removeButton.addEventListener("click", function () {
+            // Remove button
+            const footer = document.createElement("div");
+            footer.className = "recipe-card-footer";
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "Remove";
+            removeBtn.setAttribute('aria-label', `Remove ${fav.title} from favorites`);
+            removeBtn.addEventListener("click", () => {
                 favorites = favorites.filter(r => r.id !== fav.id);
                 updateFavorites();
             });
-            cardFooter.appendChild(removeButton);
-            card.appendChild(cardFooter);
+            footer.appendChild(removeBtn);
+            card.appendChild(footer);
 
             favoritesGrid.appendChild(card);
         });
