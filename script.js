@@ -15,7 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchButton = document.getElementById("search-button");
     const resultsContainer = document.getElementById("results");
     const favoritesContainer = document.getElementById("favorites");
-    let favorites = []; // I store favorite recipes here.
+
+    // Load favorites from localStorage (if any), otherwise start with an empty array
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+updateFavorites();
+
 
     const modal = document.getElementById("recipe-modal");
     const modalBody = document.getElementById("modal-body");
@@ -342,5 +346,7 @@ window.addEventListener("click", function (event) {
 
             favoritesGrid.appendChild(card);
         });
+        
+        localStorage.setItem('favorites', JSON.stringify(favorites));
     }
 });
