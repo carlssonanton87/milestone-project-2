@@ -1,5 +1,7 @@
 // I wait for the DOM to fully load before executing any code.
 document.addEventListener("DOMContentLoaded", function () {
+    const loadingSpinner = document.getElementById('loading-spinner');
+
     // I select elements for adding ingredients.
     const ingredientInput = document.getElementById("ingredient-input");
     const ingredientAddBtn = document.getElementById("ingredient-add-btn");
@@ -69,6 +71,8 @@ updateFavorites();
      * @param {string} query - A comma-separated list of ingredients.
      */
     function fetchRecipes(query) {
+        // Show spinner
+  loadingSpinner.classList.remove('hidden');
         const apiKey = "efcc557c1f6e4663b53db75c89df0f88"; // My Spoonacular API key.
         const number = 10; // I want to return 10 recipes.
         let url = `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${encodeURIComponent(query)}&diet=vegan`;
@@ -86,20 +90,22 @@ updateFavorites();
         console.log("Fetching URL:", url);
 
         fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
+        .then(response => {
+            // Hide spinner once we have a response
+            loadingSpinner.classList.add('hidden');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+          })
             .then(data => {
                 console.log("API Response:", data);
                 displayRecipes(data.results);
             })
             .catch(error => {
+                // Hide spinner even on error
+                loadingSpinner.classList.add('hidden');
                 console.error("Error fetching recipes:", error);
                 resultsContainer.innerHTML = "<p>Error fetching recipes. Please try again later.</p>";
-            });
+              });
     }
 
     /**
@@ -346,7 +352,7 @@ window.addEventListener("click", function (event) {
 
             favoritesGrid.appendChild(card);
         });
-        
+
         localStorage.setItem('favorites', JSON.stringify(favorites));
     }
 });
