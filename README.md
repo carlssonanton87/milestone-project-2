@@ -52,6 +52,60 @@
 
 ---
 
+## Testing
+
+### Manual Testing Principles
+- **Manual Flows**  
+  Verifying interactive behaviors (adding/removing ingredients, favorites, modal open/close) by hand.
+- **Edge Cases**  
+  Checking empty inputs, slow network behavior, and error displays.
+
+### Test Cases & Results
+
+1. **Search with No Ingredients**  
+   - **Steps:** Click **Search Recipes** without adding any tags.  
+   - **Expected:** Console logs “No ingredients selected.” No API call made.  
+   - **Result:** ✅ Pass
+
+2. **Add & Remove Ingredient Tags**  
+   - **Steps:** Add “tofu”, “spinach”; click the ✕ on “spinach”.  
+   - **Expected:** Only “tofu” remains displayed.  
+   - **Result:** ✅ Pass
+
+3. **Fetch & Display Recipes**  
+   - **Steps:** Add at least one ingredient and click **Search Recipes**.  
+   - **Expected:** 10 recipe cards load with image, title, and shortened summary.  
+   - **Result:** ✅ Pass
+
+4. **Favorite a Recipe & Persistence**  
+   - **Steps:** Click ★ on a recipe card, then refresh the page.  
+   - **Expected:** That card remains starred and appears in Favorites.  
+   - **Result:** ✅ Pass
+
+5. **Open & Close Modal**  
+   - **Steps:** Click **View recipe** on any card; click × or outside the modal.  
+   - **Expected:** Modal opens with full details, then closes.  
+   - **Result:** ✅ Pass
+
+6. **Invalid API Response Handling**  
+   - **Steps:** Temporarily remove API key and search again.  
+   - **Expected:** Error message displays: “Error fetching recipes. Please try again later.”  
+   - **Result:** ✅ Pass
+
+### Screenshots
+
+- **Adding & Removing Tags**  
+  ![Tags Test](assets/tests/tags-test.png)
+
+- **Recipe Grid & Favorites**  
+  ![Favorites Test](assets/tests/favorites-test.png)
+
+- **Full Recipe Modal**  
+  ![Modal Test](assets/tests/modal-test.png)
+
+
+
+
 ## Technologies Used
 - **HTML5, CSS3, JavaScript** – Core front‑end stack  
 - **Spoonacular API** – Recipe data (endpoints: `complexSearch`, `information`)  
