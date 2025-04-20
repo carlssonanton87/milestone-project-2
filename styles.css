@@ -233,6 +233,14 @@ main {
   color: #006d77;
 }
 
+/* No-results message styling */
+.no-results {
+    text-align: center;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #3D405B; /* matches palette */
+    margin-top: 2rem;
+}
 /* Spinner */
 .spinner {
   width: 50px;
