@@ -1,5 +1,8 @@
 # Milestone Project 2 – Vegan Recipe Finder
 
+<!-- New logo, shown on desktop -->
+![Vegan Recipe Finder Logo](assets/logo1.png)
+
 ## Overview
 **Vegan Recipe Finder** is an interactive front‑end web application that helps users discover vegan recipes based on the ingredients they have at home. It integrates with the Spoonacular API to:
 
@@ -10,6 +13,11 @@
 - Open a **View Recipe** modal with a full‑size image, detailed description, and step‑by‑step instructions  
 
 **Live Site:** [Vegan Recipe Finder on GitHub Pages](https://carlssonanton87.github.io/milestone-project-2/)
+
+![GitHub contributors](https://img.shields.io/github/contributors/carlssonanton87/milestone-project-2) ![GitHub last commit](https://img.shields.io/github/last-commit/carlssonanton87/milestone-project-2) ![GitHub language count](https://img.shields.io/github/languages/count/carlssonanton87/milestone-project-2) ![GitHub top language](https://img.shields.io/github/languages/top/carlssonanton87/milestone-project-2)
+
+
+
 
 ---
 ## CONTENTS
@@ -172,6 +180,8 @@ Wireframes were created bu using Visily.ai
 - [Coolors](https://coolors.co/) - To select the colour palette for the site.
 - [Shields.io](https://shields.io/) To add badges to the README
 - [Visily](https://visily.ai/) - To create wireframes for the site
+- [Am I Responsive?](http://ami.responsivedesign.is/) To show the website image on a range of devices.
+- [Favicon.io](https://favicon.io/) To create favicon.
 
 
 ---
@@ -269,8 +279,33 @@ I opted for manual testing in this phase because it let me exercise and validate
 - **Full Recipe Modal**  
   ![Modal Test](assets/tests/modal-test.png)
 
-
+## Bug Fixes
+### Bug: API Fetch Failing Initially
+- **Description:**  
+  First fetch attempt failed because our script ran before the DOM was ready and the results container wasn’t defined.  
+- **Impact:**  
+  No recipes displayed on search, blocking API integration testing.  
+- **Resolution:**  
+  Wrapped all DOM queries and event listeners inside a `DOMContentLoaded` handler and ensured `resultsContainer` is correctly selected.  
+- **Status:**  
+  Fixed in commit `feat: Integrate Spoonacular API with real data and wrap code in DOMContentLoaded`.
 ---
+
+## Development Process
+1. **Initial Setup**  
+   Created base HTML, CSS, and JavaScript scaffolding; set up GitHub repo.  
+2. **Ingredient Tag & Filter System**  
+   Built dynamic ingredient‑tag component and filter checkboxes.  
+3. **API Integration**  
+   Integrated Spoonacular’s `complexSearch` endpoint with `diet=vegan` and added filter parameters.  
+4. **Recipe Card Layout**  
+   Designed a responsive CSS Grid of recipe cards, each with an image, title, and truncated summary.  
+5. **Favorites Functionality**  
+   Added a star toggle to save favorites, displayed in a separate responsive grid.  
+6. **Full Recipe Modal**  
+   Implemented a modal that fetches and shows full recipe details (image, summary, instructions).  
+7. **Summary Shortening**  
+   Added helper functions to strip HTML and shorten long summaries for improved readability.  
 
 ## Credits
 
@@ -306,6 +341,8 @@ All site content (labels, instructions, error messages) authored by me.
 
 - Recipe images from Spoonacular API.  
 - Wireframe mockups created with Visily.
+- **Logo designed with [TurboLogo](https://turbologo.com).**
+- **Favicon designed with [Favicon](https://favicon.io).**
 
 ### Acknowledgments
 
@@ -315,32 +352,3 @@ All site content (labels, instructions, error messages) authored by me.
 
 
 ---
-
-## Bug Fixes
-### Bug: API Fetch Failing Initially
-- **Description:**  
-  First fetch attempt failed because our script ran before the DOM was ready and the results container wasn’t defined.  
-- **Impact:**  
-  No recipes displayed on search, blocking API integration testing.  
-- **Resolution:**  
-  Wrapped all DOM queries and event listeners inside a `DOMContentLoaded` handler and ensured `resultsContainer` is correctly selected.  
-- **Status:**  
-  Fixed in commit `feat: Integrate Spoonacular API with real data and wrap code in DOMContentLoaded`.
-
----
-
-## Development Process
-1. **Initial Setup**  
-   Created base HTML, CSS, and JavaScript scaffolding; set up GitHub repo.  
-2. **Ingredient Tag & Filter System**  
-   Built dynamic ingredient‑tag component and filter checkboxes.  
-3. **API Integration**  
-   Integrated Spoonacular’s `complexSearch` endpoint with `diet=vegan` and added filter parameters.  
-4. **Recipe Card Layout**  
-   Designed a responsive CSS Grid of recipe cards, each with an image, title, and truncated summary.  
-5. **Favorites Functionality**  
-   Added a star toggle to save favorites, displayed in a separate responsive grid.  
-6. **Full Recipe Modal**  
-   Implemented a modal that fetches and shows full recipe details (image, summary, instructions).  
-7. **Summary Shortening**  
-   Added helper functions to strip HTML and shorten long summaries for improved readability.  
