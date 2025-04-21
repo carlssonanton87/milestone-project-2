@@ -9,12 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
   var spinner       = document.getElementById('loading-spinner')              // spinner
   let formTags      = document.getElementById('ingredient-form')              // form input tags
   const tagContainer = document.getElementById('ingredient-list')             // tag list container
-  const searchForm   = document.getElementById('search-form')                 // search form
+  const searchBtn = document.getElementById('search-button')
   const resultsDiv   = document.getElementById('results')                     // results grid
   const favGrid      = document.getElementById('favorites-grid')              // favorites grid
   const glutenFree   = document.getElementById('filter-gluten-free')          // gluten-free
   const highProtein  = document.getElementById('filter-high-protein')         // high-protein
   const quickMeals   = document.getElementById('filter-quick-meals')          // quick-meals
+
+  // hamburger menu toggle
+  document.getElementById('nav-toggle')
+  .addEventListener('click', e => {
+    document.querySelector('nav').classList.toggle('open');
+  });
 
   // state
   let ingreds = []
@@ -37,9 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // search recipes
-  searchForm.addEventListener('submit', async e => {
-    e.preventDefault()
-    if (!ingreds.length) return alert('Add at least one ingredient!')
+  searchBtn.addEventListener('click', async (e) => {
+    e.preventDefault()                // just in case
+    if (!ingreds.length) {
+      alert('Add at least one ingredient!')
+      return
+    }
+    console.log('🔎 search for:', ingreds)
     await fetchAndShow(ingreds.join(','))
   })
 

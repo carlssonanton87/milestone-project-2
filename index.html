@@ -12,7 +12,19 @@
 <body>
     <header>
         <div class="header-content">
-          <h1>Vegan Recipe Finder</h1>
+            <img
+            src="assets/logo1.png"
+            alt="Vegan Recipe Finder"
+            class="site-logo site-logo--desktop"
+          />
+      
+          <!-- Mobile‐only logo -->
+          <img
+            src="assets/logo2.png"
+            alt="Vegan Recipe Finder"
+            class="site-logo site-logo--mobile"
+          />
+          <button id="nav-toggle" aria-label="Toggle navigation">☰</button>
           <nav>
             <ul class="main-nav">
               <li><a href="#results">Home</a></li>
@@ -25,35 +37,33 @@
 
   <main>
    <!-- Ingredient Form -->
-<section id="ingredient-section">
+   <section id="ingredient-section">
     <form id="ingredient-form">
       <label for="ingredient-input">What's in your kitchen?</label>
       <div id="ingredient-input-wrapper">
         <input
           type="text"
           id="ingredient-input"
-          placeholder="Add ingredient..."
+          placeholder="Add ingredient…"
           aria-label="Add ingredient"
         />
-        <button type="submit" id="ingredient-add-btn">+</button>
+        <button type="button" id="ingredient-add-btn">+</button>
       </div>
-    </form>
-    <div id="ingredient-list"></div>
-  </section>
   
-  <!-- Filter & Search Form -->
-  <section id="filter-section">
-    <form id="search-form">
-      <h3>Additional Filters:</h3>
-      <label><input type="checkbox" id="filter-gluten-free" /> Gluten‑Free</label>
-      <label><input type="checkbox" id="filter-high-protein" /> High‑Protein</label>
-      <label><input type="checkbox" id="filter-quick-meals" /> Quick Meals</label>
+      <!-- ← Add this back -->
+      <div id="ingredient-list"></div>
   
-      <!-- This submit button now also fires when you press Enter anywhere in this form -->
-      <button type="submit" id="search-button">Search Recipes</button>
+      <!-- Inline filters & search button now -->
+      <div id="inline-filters">
+        <label><input type="checkbox" id="filter-gluten-free"> Gluten‑Free</label>
+        <label><input type="checkbox" id="filter-high-protein"> High‑Protein</label>
+        <label><input type="checkbox" id="filter-quick-meals"> Quick Meals</label>
+      </div>
+      <button type="button" id="search-button">Search Recipes</button>
     </form>
   </section>
   
+
   
     <!-- Loading spinner (hidden by default) -->
 <div id="loading-spinner" class="spinner hidden"></div>

@@ -217,6 +217,10 @@ To clone the repository:
 ## Testing
 
 ### Manual Testing Principles
+I opted for manual testing in this phase because it let me exercise and validate each interactive flow—adding/removing ingredients, toggling favorites, opening/closing the modal—directly in the browser. Manual checks helped catch UI quirks, accessibility focus issues, and asynchronous timing edge‑cases more quickly than setting up an automated suite. Once the core functionality is solid, I plan to introduce automated unit and integration tests to guard against regressions.
+
+- **Testing Process:** I manually exercised every user flow in Chrome, Firefox and Safari (desktop + mobile emulation), validated HTML/CSS with the W3C validators, checked for console errors in DevTools, and tested keyboard navigation/aria‑label announcements to ensure accessibility.
+
 - **Manual Flows**  
   Verifying interactive behaviors (adding/removing ingredients, favorites, modal open/close) by hand.
 - **Edge Cases**  
