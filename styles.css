@@ -28,7 +28,7 @@ header .header-content {
 
 /* Show desktop logo by default */
 .site-logo--mobile { display: none; }
-.site-logo { max-height: 10rem; }
+.site-logo { max-height: 6rem; }
 
 /* Hamburger toggle hidden on desktop */
 #nav-toggle { display: none; font-size: 1.5rem; background: none; border: none; color: #fff; cursor: pointer; }

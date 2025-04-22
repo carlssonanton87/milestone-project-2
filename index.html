@@ -1,91 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vegan Recipe Finder</title>
+
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-  
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="icon" href="assets/favicon.ico">
-  <!-- Link to Google Fonts for Montserrat -->
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <img
-            src="assets/logo1.png"
-            alt="Vegan Recipe Finder"
-            class="site-logo site-logo--desktop"
-          />
-      
-          <!-- Mobile‐only logo -->
-          <img
-            src="assets/logo2.png"
-            alt="Vegan Recipe Finder"
-            class="site-logo site-logo--mobile"
-          />
-          <button id="nav-toggle" aria-label="Toggle navigation">☰</button>
-          <nav>
-            <ul class="main-nav">
-              <li><a href="#results">Home</a></li>
-              <li><a href="#favorites">Favorites</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-      
+  <header>
+    <div class="header-content">
+      <img
+        src="assets/logo1.png"
+        alt="Vegan Recipe Finder"
+        class="site-logo site-logo--desktop">
+      <!-- Mobile‐only logo -->
+      <img
+        src="assets/logo2.png"
+        alt="Vegan Recipe Finder"
+        class="site-logo site-logo--mobile">
+      <button id="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <nav>
+        <ul class="main-nav">
+          <li><a href="#results">Home</a></li>
+          <li><a href="#favorites">Favorites</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
   <main>
-   <!-- Ingredient Form -->
-   <section id="ingredient-section">
-    <form id="ingredient-form">
-      <label for="ingredient-input">What's in your kitchen?</label>
-      <div id="ingredient-input-wrapper">
-        <input
-          type="text"
-          id="ingredient-input"
-          placeholder="Add ingredient…"
-          aria-label="Add ingredient"
-        />
-        <button type="button" id="ingredient-add-btn">+</button>
-      </div>
-  
-      <!-- ← Add this back -->
-      <div id="ingredient-list"></div>
-  
-      <!-- Inline filters & search button now -->
-      <div id="inline-filters">
-        <label><input type="checkbox" id="filter-gluten-free"> Gluten‑Free</label>
-        <label><input type="checkbox" id="filter-high-protein"> High‑Protein</label>
-        <label><input type="checkbox" id="filter-quick-meals"> Quick Meals</label>
-      </div>
-      <button type="button" id="search-button">Search Recipes</button>
-    </form>
-  </section>
-  
+    <!-- Ingredient & Search Panel -->
+    <section id="ingredient-section">
+      <h2>Ingredients & Search</h2>
+      <form id="ingredient-form">
+        <label for="ingredient-input">What's in your kitchen?</label>
+        <div id="ingredient-input-wrapper">
+          <input
+            type="text"
+            id="ingredient-input"
+            placeholder="Add ingredient…"
+            aria-label="Add ingredient">
+          <button type="button" id="ingredient-add-btn">+</button>
+        </div>
 
-  
+        <div id="ingredient-list"></div>
+
+        <!-- Inline filters -->
+        <div id="inline-filters">
+          <label><input type="checkbox" id="filter-gluten-free"> Gluten‑Free</label>
+          <label><input type="checkbox" id="filter-high-protein"> High‑Protein</label>
+          <label><input type="checkbox" id="filter-quick-meals"> Quick Meals</label>
+        </div>
+
+        <button type="button" id="search-button">Search Recipes</button>
+      </form>
+    </section>
+
     <!-- Loading spinner (hidden by default) -->
-<div id="loading-spinner" class="spinner hidden"></div>
+    <div id="loading-spinner" class="spinner hidden"></div>
 
     <!-- Results Grid for Recipe Cards -->
-    <section id="results" class="recipe-grid"></section>
-  
+    <section id="results" class="recipe-grid">
+      <h2>Results</h2>
+    </section>
+
     <!-- Favorites Section -->
     <section id="favorites">
       <h2>Favorites</h2>
       <div id="favorites-grid"></div>
     </section>
   </main>
-  
-<!-- Modal Structure for Full Recipe Details -->
-<div id="recipe-modal" class="modal">
+
+  <!-- Modal Structure for Full Recipe Details -->
+  <div id="recipe-modal" class="modal">
     <div class="modal-content">
       <span id="modal-close" class="modal-close">&times;</span>
       <div id="modal-body">
@@ -93,7 +91,7 @@
       </div>
     </div>
   </div>
-  
+
   <script src="script.js"></script>
 </body>
 </html>
