@@ -14,10 +14,9 @@
 
 **Live Site:** [Vegan Recipe Finder on GitHub Pages](https://carlssonanton87.github.io/milestone-project-2/)
 
-![GitHub contributors](https://img.shields.io/github/contributors/carlssonanton87/milestone-project-2) ![GitHub last commit](https://img.shields.io/github/last-commit/carlssonanton87/milestone-project-2) ![GitHub language count](https://img.shields.io/github/languages/count/carlssonanton87/milestone-project-2) ![GitHub top language](https://img.shields.io/github/languages/top/carlssonanton87/milestone-project-2)
+![GitHub contributors](https://img.shields.io/github/contributors/carlssonanton87/milestone-project-2) ![GitHub last commit](https://img.shields.io/github/last-commit/carlssonanton87/milestone-project-2) ![GitHub language count](https://img.shields.io/github/languages/count/carlssonanton87/milestone-project-2) ![GitHub top language](https://img.shields.io/github/languages/top/carlssonanton87/milestone-project-2) ![W3C Validation](https://img.shields.io/w3c-validation/html?targetUrl=https%3A%2F%2Fcarlssonanton87.github.io%2Fmilestone-project-2%2F)
 
-
-
+       
 
 ---
 ## CONTENTS
@@ -271,13 +270,13 @@ I opted for manual testing in this phase because it let me exercise and validate
 ### Screenshots
 
 - **Adding & Removing Tags**  
-  ![Tags Test](assets/tests/tags-test.png)
+  ![Tags Test](assets/tests/tags-test.gif)
 
 - **Recipe Grid & Favorites**  
-  ![Favorites Test](assets/tests/favorites-test.png)
+  ![Favorites Test](assets/tests/favorites-test.gif)
 
 - **Full Recipe Modal**  
-  ![Modal Test](assets/tests/modal-test.png)
+  ![Modal Test](assets/tests/modal-test.gif)
 
 ## Bug Fixes
 ### Bug: API Fetch Failing Initially
@@ -346,7 +345,7 @@ All site content (labels, instructions, error messages) authored by me.
 
 ### Acknowledgments
 
-- Thanks to my mentor and the CI community for guidance on API integration and responsive design.  
+- Thanks to the CI community for guidance on API integration and responsive design.  
 - Special shout‑out to peers for UX feedback during peer reviews.
 
 
