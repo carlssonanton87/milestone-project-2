@@ -112,7 +112,7 @@ main {
 }
 #ingredient-add-btn {
   padding: 0.8rem;
-  background-color: var(--turquoise);
+  background-color: var(--teal);
   color: #fff;
   border: none;
   border-radius: 5px;

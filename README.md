@@ -1,7 +1,7 @@
 # Milestone Project 2 – Vegan Recipe Finder
 
 <!-- New logo, shown on desktop -->
-![Vegan Recipe Finder Logo](assets/logo1.png)
+![Vegan Recipe Finder Logo](assets/logo3.png)
 
 ## Overview
 **Vegan Recipe Finder** is an interactive front‑end web application that helps users discover vegan recipes based on the ingredients they have at home. It integrates with the Spoonacular API to:
@@ -11,6 +11,10 @@
 - Display results in a modern, responsive card grid with shortened summaries  
 - Save favorites via a ★/☆ toggle and view them in a separate grid  
 - Open a **View Recipe** modal with a full‑size image, detailed description, and step‑by‑step instructions  
+
+![Vegan Recipe Finder shown on a range of devices](assets/devices.png)  
+
+
 
 **Live Site:** [Vegan Recipe Finder on GitHub Pages](https://carlssonanton87.github.io/milestone-project-2/)
 
@@ -181,6 +185,8 @@ Wireframes were created bu using Visily.ai
 - [Visily](https://visily.ai/) - To create wireframes for the site
 - [Am I Responsive?](http://ami.responsivedesign.is/) To show the website image on a range of devices.
 - [Favicon.io](https://favicon.io/) To create favicon.
+- [ScreenToGif](https://screentogif.com/) To gifs for test cases.
+- [JSHint](https://jshint.com/) To validate javascript code.
 
 
 ---
@@ -228,7 +234,7 @@ To clone the repository:
 ### Manual Testing Principles
 I opted for manual testing in this phase because it let me exercise and validate each interactive flow—adding/removing ingredients, toggling favorites, opening/closing the modal—directly in the browser. Manual checks helped catch UI quirks, accessibility focus issues, and asynchronous timing edge‑cases more quickly than setting up an automated suite. Once the core functionality is solid, I plan to introduce automated unit and integration tests to guard against regressions.
 
-- **Testing Process:** I manually exercised every user flow in Chrome, Firefox and Safari (desktop + mobile emulation), validated HTML/CSS with the W3C validators, checked for console errors in DevTools, and tested keyboard navigation/aria‑label announcements to ensure accessibility.
+- **Testing Process:** I manually exercised every user flow in Chrome, Firefox and Safari (desktop + mobile emulation), validated HTML/CSS with the W3C validators, validated JS with jshint, checked for console errors in DevTools, and tested keyboard navigation/aria‑label announcements to ensure accessibility.
 
 - **Manual Flows**  
   Verifying interactive behaviors (adding/removing ingredients, favorites, modal open/close) by hand.
@@ -288,6 +294,16 @@ I opted for manual testing in this phase because it let me exercise and validate
   Wrapped all DOM queries and event listeners inside a `DOMContentLoaded` handler and ensured `resultsContainer` is correctly selected.  
 - **Status:**  
   Fixed in commit `feat: Integrate Spoonacular API with real data and wrap code in DOMContentLoaded`.
+
+  ### API Constraints
+
+- **Daily Quota**  
+  This app uses Spoonacular’s **free** tier, which is limited to **150 requests per 24-hour period**. Once you hit that limit, further calls will fail until the quota resets.
+
+- **Mitigation Strategies**  
+  - We cache recipe summaries in `localStorage` so repeat visits don’t incur extra requests.  
+  - In a production build you could add a lightweight server-side cache or upgrade to a paid Spoonacular plan to lift the daily limit.
+
 ---
 
 ## Development Process
